@@ -1,4 +1,4 @@
 ﻿enyo.depends(
-	"source/SplitView.js",
-	"source/SplitView.css"
+	"source/MainView.js",
+	"source/MainView.css"
 );
