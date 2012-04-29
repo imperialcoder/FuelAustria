@@ -1,0 +1,10 @@
+{
+	"id": "com.imperialcoder.fuelaustria",
+	"version": "1.0.0",
+	"vendor": "Imperialcoder",
+	"type": "web",
+	"main": "index.html",
+	"title": "Fuel Austria",
+	"icon": "icon.png",
+	"uiRevision":2
+}
