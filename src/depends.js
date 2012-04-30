@@ -1,4 +1,9 @@
 ﻿enyo.depends(
 	"source/MainView.js",
+    "source/OptionView.js",
+    "source/DistrictSelectionView.js",
+    "source/StationListView.js",
+    "source/StationListItem.js",
+    "source/ErrorDialog.js",
 	"source/MainView.css"
 );

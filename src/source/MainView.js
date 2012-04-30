@@ -1,59 +1,56 @@
 ﻿enyo.kind({
 	name: "FuelAustria",
     kind: enyo.VFlexBox,
+    className: "enyo-bg",
     data: [],
     federalStates: [],
     components: [
-        {name: "getBezirksData", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkStationServlet",
-            method: 'GET',
-            onSuccess: "gotData",
-            onFailure: "gotDataFailure"},
-        {name: "getAllBezirke", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkDataServlet",
-            method: 'GET',
-            onSuccess: "gotBezirke",
-            onFailure: "gotBezirkeFailure"},
-        {name: "slidingPane", kind: "SlidingPane", flex: 1, components: [
-            {name: "left", width: "320px", kind:"SlidingView", components: [
-                {kind: "Header", content:"Options"},
-                {kind: "Scroller", flex: 1, components: [
-                    {kind: "IconButton", caption: "In der Nähe", icon: "images/pin.png", height:65},
-                    {kind: "IconButton", caption: "Adresse", icon: "images/map.png"},
-                    {kind: "IconButton", caption: "Bezirkssuche", icon: "images/map.png", onclick: "onBezirksSucheClick"},
-                    {kind: "RadioGroup", name: "fuelGroup", onclick: "fuelGroupClick",
-                        components: [
-                            {caption: "Super 95",value: "SUP"},
-                            {caption: "Diesel", value: "DIE"}
-                        ]
-                    },
-                    {kind: "HFlexBox", align: "center", tapHighlight: false, components: [
-                        {kind: "CheckBox", name:"includeClosedCheck", checked: true, onChange: "checkboxClicked" },
-                        {content: "&nbsp;Geschlossene anzeigen"}
-                    ]}
-                ]},
-                {kind: "Toolbar", components: [
-                    //Insert if needed
-                ]}
-            ]},
-            {name: "right", kind:"SlidingView", flex: 1, components: [
-                {kind: "Header", content:"Content"},
-                {kind: "Scroller", flex: 1, components: [
-                    {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: []},
-                    {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: []},
-                    {kind: "Button", caption: "Bezirkssuche",  onclick: "onBezirksAuswahlSucheClick"},
-                    {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-                        {kind: "Item", name:'listItem', layoutKind: "HFlexLayout", onclick: "doListTap",  components: [
-                            {name: "gasStationName", flex: 2},
-                            {name: "price", flex: 1},
-                            {name: "open", flex: 1},
-                            {kind: "Image", width:18, height:18, src: "images/arrow-right.png"}
-                        ]}
-                    ]}
-                ]},
-                {kind: "Toolbar", components: [
-                    {kind: "GrabButton"}
-                ]}
+        {
+            kind: "PageHeader",
+            name: "header",
+            className: "enyo-toolbar-light",
+            pack: "center",
+            components: [{
+                kind: "Image",
+                src: "icon.png",
+                height: "64px",
+                style: "margin-right: 10px"
+            },
+            {
+                kind: "Control",
+                name: "title",
+                content: $L("Fuel Austria"),
+                className: "enyo-text-header page-title"
+            }]
+        },
+        {kind: "Scroller", flex: 1, components: [
+            { kind: "Pane", flex: 1, onSelectView: "viewSelected", components: [
+                {
+                    name: "optionPane",
+                    kind: "OptionView",
+                    flex: 1,
+                    onDistrictSearchClick: "districtSearchClick",
+                    onCurrentPositionClick: "currentPositionClick",
+                    onAddressSearchClick: 'addressSearchClick'
+                },
+                {
+                    kind: "MainStationListView",
+                    flex: 1,
+                    name: "list",
+                    lazy: true,
+                    onAddStation: "newItemClick",
+                    onEditStation: "newItemClick"
+                },
+                {
+                    kind: 'DistrictSelectionView',
+                    flex: 1,
+                    name: "districtSelection",
+                    lazy: true,
+                    onSearchClick: 'districtSearchSuccess',
+                    onBackClick: 'districtBackClick',
+                    onFuelTypeSearch: 'fuelTypeSearch',
+                    onClosedCheck: 'closedCheck'
+                }
             ]}
         ]}
     ],
@@ -61,14 +58,35 @@
         this.load();
     },
     load: function(){
-        this.$.fuelGroup.setValue('DIE');
+        this.$.optionPane.load();
+
+        this.$.pane.selectViewByName("optionPane");
     },
-    fuelGroupClick: function(sender){
-        console.log('fuelGroupClick');
+
+    newItemClick: function(inSender) {
+        console.log("newItemClick: ");
+        //this.$.dialogProfile.setActiveProfile();
+        this.$.pane.selectViewByName("list");
+        //this.$.dialogProfile.beginEdit();
     },
-    checkboxClicked: function(sender){
-        console.log('checkboxClicked');
+
+    districtSearchClick: function(sender){
+        enyo.log('districtSearch click');
+        this.$.pane.selectViewByName('districtSelection');
     },
+
+    districtBackClick: function(sender) {
+        this.$.pane.selectViewByName('optionPane');
+    },
+
+    fuelTypeSearch: function(){
+        return this.$.optionPane.getFuelType();
+    },
+    closedCheck: function(){
+        return this.$.optionPane.getClosedCheck();
+    },
+
+
     gotData: function(sender, response, request) {
         if(enyo.isArray(response)) {
            this.data = response;
@@ -92,27 +110,6 @@
     onBezirksSucheClick: function(inSender, inTwo, inThree) {
         this.$.getAllBezirke.call();
     },
-    onBezirksAuswahlSucheClick: function(inSender, inTwo, inThree) {
-        var state = this.$.federalStateSelector.getValue();
-        var district = this.$.districtSelector.getValue();
-        var fuelType = this.$.fuelGroup.getValue();
-        var allDistrcicts = false;
-
-        var districtOrState = "PB";
-        if(!district){
-            districtOrState = "BL";
-            allDistrcicts = true;
-        }
-
-        var checked = '';
-        if(this.$.includeClosedCheck.checked){
-            checked = 'checked';
-        }
-
-        var data = '[' + (allDistrcicts ? state : district) + ', \"' + districtOrState + '\", \"' + fuelType +'\", \"' + checked + '\"]';
-
-        this.$.getBezirksData.call({data: data});
-    },
     getItem: function(sender, index) {
         var record = this.data[index];
         if (record) {
@@ -123,26 +120,7 @@
             return true;
         }
     },
-    federalStateChanged: function(sender, value, oldValue) {
-        if(value !== oldValue){
-            var record;
-            enyo.forEach(this.$.federalStateSelector.items, function(item){
-                if(item.value === value){
-                    record = item.record;
-                    return false;
-                }
-            }, this);
-            var items = [{caption: 'Alle', value:0}];
-            enyo.forEach(record.unterregionen, function(district){
-                items.push({ caption: district.bezeichnung, value: district.code});
-            }, this);
-            this.$.districtSelector.setItems(items);
-            this.$.districtSelector.setValue(0);
-        }
-    },
-    districtChanged: function(sender, value, oldValue) {
-        enyo.log(value);
-    },
+
     translateBoolean: function(open){
         if(open){
             return 'Offen';
@@ -150,21 +128,24 @@
             return 'Geschlossen';
         }
     },
+    districtSearchSuccess: function(response) {
+        enyo.log('districtsearchsuccess');
+    },
     doListTap: function(sender, mouseEvent, index){
         var record = this.$.listItem.record;
         enyo.log(record);
     },
-    getFederalStates: function(stateObjects){
-        var states = [];
-        states.push(stateObjects.Burgenland);
-        states.push(stateObjects.Kärnten);
-        states.push(stateObjects.Niederösterreich);
-        states.push(stateObjects.Oberösterreich);
-        states.push(stateObjects.Salzburg);
-        states.push(stateObjects.Steiermark);
-        states.push(stateObjects.Tirol);
-        states.push(stateObjects.Vorarlberg);
-        states.push(stateObjects.Wien);
-        return states;
+
+    viewSelected: function(inSender, inView, inPreviousView) {
+        var title = "";
+        switch (inView.name) {
+            case "dialogProfile":
+                title = $L("Edit Drive");
+                break;
+            case "list":
+                title = $L("Network Drives");
+                break;
+        }
+        this.$.title.setContent(title);
     }
 });
