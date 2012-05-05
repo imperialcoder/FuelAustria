@@ -2,8 +2,7 @@
 	name: "FuelAustria",
     kind: enyo.VFlexBox,
     className: "enyo-bg",
-    data: [],
-    federalStates: [],
+    transitionKind: "enyo.transitions.LeftRightFlyin",
     components: [
         {
             kind: "PageHeader",
@@ -76,7 +75,7 @@
     },
 
     districtBackClick: function(sender) {
-        this.$.pane.selectViewByName('optionPane');
+        this.$.pane.back();//selectViewByName('optionPane');
     },
 
     fuelTypeSearch: function(){

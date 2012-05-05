@@ -2,6 +2,7 @@
     name: "DistrictSelectionView",
     kind: enyo.VFlexBox,
     className: "enyo-bg",
+    data: [],
     events: {
         onSearchClick: "",
         onBackClick: "",
@@ -32,10 +33,10 @@
                     {kind: "Button", caption: "Bezirkssuche",  onclick: "onBezirksAuswahlSucheClick"},
                     {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
                         {kind: "Item", name:'listItem', layoutKind: "HFlexLayout", onclick: "doListTap",  components: [
-                            {name: "gasStationName", flex: 2},
+                            {name: "gasStationName", flex: 5},
                             {name: "price", flex: 1},
-                            {name: "open", flex: 1},
-                            {kind: "Image", width:18, height:18, src: "images/arrow-right.png"}
+                            //{name: "open", flex: 1}//,
+                            {kind: "Image", name:"open", width:18, height:18}
                         ]}
                     ]}
                 ]}
@@ -82,6 +83,9 @@
             items.push({caption: state.bezeichnung, value: state.code, record: state});
         }, this);
         this.$.federalStateSelector.setItems(items);
+        this.$.federalStateSelector.setValue(items[0].value);
+        this.$.federalStateSelector.itemsChanged();
+        this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
     },
     gotBezirkeFailure: function(sender, response, request){
         enyo.log('bezirke error');
@@ -103,11 +107,12 @@
                 items.push({ caption: district.bezeichnung, value: district.code});
             }, this);
             this.$.districtSelector.setItems(items);
-            this.$.districtSelector.setValue(-1);
+            this.$.districtSelector.setValue(items[0].value);
+            this.$.districtSelector.itemsChanged();
         }
     },
     districtChanged: function(sender, value, oldValue) {
-        enyo.log(value);
+        enyo.log('districtChanged');
     },
     onBezirksAuswahlSucheClick: function(inSender, inTwo, inThree) {
         var state = this.$.federalStateSelector.getValue();
@@ -130,6 +135,34 @@
 
         this.$.getBezirksData.call({data: data});
         //this.doSearchClick();
+    },
+
+    getItem: function(sender, index) {
+        var record = this.data[index];
+        if (record) {
+            this.$.listItem.record = record;
+            this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
+            this.$.price.setContent('€' +  record.spritPrice[0].amount);
+            //this.$.open.setContent(this.translateBoolean(record.open));
+            this.$.open.setSrc(this.translateBoolean(record.open));
+            return true;
+        }
+    },
+
+//    translateBoolean: function(open){
+//        if(open){
+//            return 'Offen';
+//        } else {
+//            return 'Geschlossen';
+//        }
+//    },
+
+    translateBoolean: function(open){
+        if(open){
+            return 'images/open.png';
+        } else {
+            return 'images/closed.png';
+        }
     },
 
     handleBackClick: function(sender, mouseEvent) {
