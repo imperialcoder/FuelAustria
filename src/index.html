@@ -7,7 +7,10 @@
 </head>
 <body>
 <script type="text/javascript">
-	new FuelAustria().renderInto(document.body);
+    if (typeof enyo === "undefined")
+        window.location = "./requiresEnyo.html";
+    else
+	    new FuelAustria().renderInto(document.body);
 </script>
 </body>
 </html>

@@ -9,6 +9,19 @@ enyo.kind({
     },
     components: [
         {
+            kind: "PageHeader",
+            name: "header",
+            className: "enyo-header",
+            pack: "center",
+            components: [
+                {
+                    kind: "Control",
+                    name: "title",
+                    content: $L("Fuel Austria"),
+                    className: "enyo-text-header page-title"
+                }]
+        },
+        {
             name      : "getPositionFix",
             kind      : "PalmService",
             service   : "palm://com.palm.location/",
@@ -50,31 +63,6 @@ enyo.kind({
                     ]}
                 ]}
             ]
-        },
-        {
-            kind: "Toolbar",
-            name: "toolbarmain",
-            pack: "center",
-            components: [
-                {kind: "Spacer"},
-                {
-                    kind: "ToolButton",
-                    //caption: "New",
-                    name: 'newItem',
-                    icon: "images/icons/toolbar-icon-new.png",
-                    className: "enyo-light-menu-button",
-                    onclick: "handleNewItemClick"
-                },
-                {
-                    kind: "ToolButton",
-                    //caption: "Refresh",
-                    name: 'refreshList',
-                    icon: "images/icons/toolbar-icon-sync.png",
-                    className: "enyo-light-menu-button",
-                    onclick: "refresh"
-                }
-                ,{kind: "Spacer"}
-            ]
         }
     ],
     rendered: function() {
@@ -97,14 +85,16 @@ enyo.kind({
     },
     //-- GPS --//
     onPositionBtnClick: function(inSender, inTwo, inThree) {
+        this.$.getPositionFix.resubscribe = true;
         this.$.getPositionFix.call();
     },
     getPosSuccess : function(inSender, inResponse) {
-        enyo.log("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
+        enyo.error("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
+        this.$.getPositionFix.resubscribe = false;
         this.doCurrentPositionClick();
     },
     getPosFailure : function(inSender, inResponse) {
-        enyo.log("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
+        enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
     }
     //-- GPS --//
 });

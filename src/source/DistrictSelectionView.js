@@ -5,11 +5,14 @@
     data: [],
     events: {
         onSearchClick: "",
-        onBackClick: "",
         onFuelTypeSearch: "",
-        onClosedCheck: ""
+        onClosedCheck: "",
+        onBackButton: ""
     },
     components: [
+        {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
+            {kind: "SpinnerLarge"}
+        ]},
         {name: "getBezirksData", kind: "WebService",
             url: "http://www.spritpreisrechner.at/ts/BezirkStationServlet",
             method: 'GET',
@@ -22,49 +25,53 @@
             onFailure: "gotBezirkeFailure"
         },
         {
+            kind: "PageHeader",
+            name: "header",
+            className: "enyo-header",
+            pack: "center",
+            components: [
+                {
+                    kind: "ToolButton",
+                    name: 'back',
+                    icon: "images/arrow-left.png",
+                    className: "enyo-light-menu-button",
+                    onclick: 'backButtonClicked'
+                },
+                {kind: "Spacer" },
+                {
+                    kind: "Control",
+                    name: "title",
+                    content: $L("Fuel Austria"),
+                    className: "enyo-text-header page-title"
+                }
+            ]
+        },
+        {
             kind: "Scroller",
             flex: 1,
             components: [{
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-                    {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: []},
-                    {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: []},
-                    {kind: "Button", caption: "Bezirkssuche",  onclick: "onBezirksAuswahlSucheClick"},
+                    {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
+                        {kind: enyo.Spinner, name: "stateSpinner"}]},
+                    {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
+                        {kind: enyo.Spinner, name: "districtSpinner"}]},
+                    {kind: "ActivityButton", caption: "Bezirkssuche", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
                     {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-                        {kind: "Item", name:'listItem', layoutKind: "HFlexLayout", onclick: "doListTap",  components: [
+                        {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
                             {name: "gasStationName", flex: 5},
-                            {name: "price", flex: 1},
-                            //{name: "open", flex: 1}//,
-                            {kind: "Image", name:"open", width:18, height:18}
+                            {name: "price", flex: 1.2},
+                            {kind: "Image", flex: 1, name:"open", width:18, height:18}
                         ]}
                     ]}
                 ]}
             ]
-        },
-        {kind: enyo.Toolbar, pack: "center", components: [
-            {kind: "Spacer"},
-            {
-                kind: "ToolButton",
-                name: 'back',
-                icon: "images/arrow-left.png",
-                className: "enyo-light-menu-button",
-                onclick: "handleBackClick"
-            },
-            {
-                kind: "ToolButton",
-                //caption: "Refresh",
-                name: 'refreshList',
-                icon: "images/icons/toolbar-icon-sync.png",
-                className: "enyo-light-menu-button",
-                onclick: "refresh"
-            }
-            ,{kind: "Spacer"}
-        ]}
+        }
     ],
     create: function() {
-        enyo.log('districtSearch create')
         this.inherited(arguments);
+        this.$.stateSpinner.show();
         this.$.getAllBezirke.call();
     },
     gotData: function(sender, response, request) {
@@ -72,9 +79,18 @@
             this.data = response;
         }
         this.$.priceList.render();
+
+        this.showScrim(false);
+
+        var a = this.$.searchButton.getActive();
+        this.$.searchButton.setActive(!a);
     },
     gotDataFailure: function(sender, response, request) {
         enyo.log('failure');
+        this.showScrim(false);
+
+        var a = this.$.searchButton.getActive();
+        this.$.searchButton.setActive(!a);
     },
     gotBezirke: function(sender, response, request){
         this.federalStates = this.getFederalStates(response);
@@ -85,13 +101,13 @@
         this.$.federalStateSelector.setItems(items);
         this.$.federalStateSelector.setValue(items[0].value);
         this.$.federalStateSelector.itemsChanged();
+        this.$.stateSpinner.hide();
+        this.$.districtSpinner.show();
         this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
     },
     gotBezirkeFailure: function(sender, response, request){
         enyo.log('bezirke error');
-    },
-    onBezirksSucheClick: function(inSender, inTwo, inThree) {
-        this.$.getAllBezirke.call();
+        this.$.stateSpinner.hide();
     },
     federalStateChanged: function(sender, value, oldValue) {
         if(value !== oldValue){
@@ -109,12 +125,18 @@
             this.$.districtSelector.setItems(items);
             this.$.districtSelector.setValue(items[0].value);
             this.$.districtSelector.itemsChanged();
+            this.$.districtSpinner.hide();
         }
     },
     districtChanged: function(sender, value, oldValue) {
         enyo.log('districtChanged');
     },
     onBezirksAuswahlSucheClick: function(inSender, inTwo, inThree) {
+        this.showScrim(true);
+
+        var a = inSender.getActive();
+        inSender.setActive(!a);
+
         var state = this.$.federalStateSelector.getValue();
         var district = this.$.districtSelector.getValue();
         var fuelType = this.doFuelTypeSearch();
@@ -134,7 +156,6 @@
         var data = '[' + (allDistricts ? state : district) + ', \"' + districtOrState + '\", \"' + fuelType +'\", \"' + checked + '\"]';
 
         this.$.getBezirksData.call({data: data});
-        //this.doSearchClick();
     },
 
     getItem: function(sender, index) {
@@ -143,19 +164,16 @@
             this.$.listItem.record = record;
             this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
             this.$.price.setContent('€' +  record.spritPrice[0].amount);
-            //this.$.open.setContent(this.translateBoolean(record.open));
             this.$.open.setSrc(this.translateBoolean(record.open));
             return true;
         }
     },
 
-//    translateBoolean: function(open){
-//        if(open){
-//            return 'Offen';
-//        } else {
-//            return 'Geschlossen';
-//        }
-//    },
+    stationSelected: function(sender, mouseEvent, index){
+        var record = this.$.listItem.record;
+        enyo.log(record);
+    },
+
 
     translateBoolean: function(open){
         if(open){
@@ -163,10 +181,6 @@
         } else {
             return 'images/closed.png';
         }
-    },
-
-    handleBackClick: function(sender, mouseEvent) {
-        this.doBackClick();
     },
 
     getFederalStates: function(stateObjects){
@@ -181,5 +195,15 @@
         states.push(stateObjects.Vorarlberg);
         states.push(stateObjects.Wien);
         return states;
+    },
+
+    // Pass true to show scrim, false to hide scrim
+    showScrim: function(inShowing) {
+        //this.$.scrim.setShowing(inShowing);
+        //this.$.spinnerLarge.setShowing(inShowing);
+    },
+
+    backButtonClicked: function(sender, mouseEvent) {
+        this.doBackButton();
     }
 });
