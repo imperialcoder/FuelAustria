@@ -25,7 +25,7 @@
             onFailure: "gotBezirkeFailure"
         },
         {
-            kind: "PageHeader",
+            kind: "Header",
             name: "header",
             className: "enyo-header",
             pack: "center",
@@ -75,6 +75,7 @@
         this.$.getAllBezirke.call();
     },
     gotData: function(sender, response, request) {
+        enyo.log(enyo.json.stringify(response));
         if(enyo.isArray(response)) {
             this.data = response;
         }
