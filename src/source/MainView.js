@@ -5,16 +5,6 @@
     transitionKind: "enyo.transitions.LeftRightFlyin",
     components: [
         {kind: "ApplicationEvents", onBack: "backGesture"},
-        {
-            name : "getConnMgrStatus",
-            kind : "PalmService",
-            service : "palm://com.palm.connectionmanager/",
-            method : "getStatus",
-            onSuccess : "statusFinished",
-            onFailure : "statusFail",
-            onResponse : "gotResponse",
-            subscribe : false
-        },
         {kind: "AppMenu", components: [
             {caption: "About", onclick: "openAbout"}
         ]},
@@ -22,9 +12,16 @@
             { kind: "Pane", flex: 1, onSelectView: "viewSelected", components: [
                 //TODO: add new pane with retry for network connection
                 {
+                    name: "connectionPane",
+                    kind: "ConnectionView",
+                    flex: 1,
+                    onConnectionEstablished: "connectionEstablished"
+                },
+                {
                     name: "optionPane",
                     kind: "OptionView",
                     flex: 1,
+                    lazy: true,
                     onDistrictSearchClick: "districtSearchClick",
                     onCurrentPositionClick: "currentPositionClick",
                     onAddressSearchClick: 'addressSearchClick'
@@ -34,36 +31,39 @@
                     flex: 1,
                     name: "districtSelection",
                     lazy: true,
-                    onSearchClick: 'districtSearchSuccess',
+                    onStationSelected: 'stationSelected',
                     onFuelTypeSearch: 'fuelTypeSearch',
                     onClosedCheck: 'closedCheck',
                     onBackButton: 'backButtonHandler'
+                },
+                {
+                    name: "stationDetails",
+                    kind: "VFlexBox",
+                    flex: 1,
+                    lazy: true
                 }
             ]}
         ]}
     ],
-    rendered: function() {
-        this.load();
-    },
-    load: function(){
-        this.$.optionPane.load();// don't forget to change the setting of the type if getting rid of this method call
-        //this.$.getConnMgrStatus.call();
+//    rendered: function() {
+//        this.inherited(arguments);
+//        this.load();
+//    },
+//    load: function(){
+//        //this.$.optionPane.load();// don't forget to change the setting of the type if getting rid of this method call
+//    },
+
+    connectionEstablished: function() {
+        this.$.pane.selectViewByName('optionPane');
     },
 
     districtSearchClick: function(sender){
         this.$.pane.selectViewByName('districtSelection');
     },
 
-//    statusFinished : function(inSender, inResponse) {
-//        var connected = inResponse.isInternetConnectionAvailable;
-//        this.$.confirmPrompt.setMessage(enyo.json.stringify(inResponse.wifi));
-//        this.$.confirmPrompt.open();
-//    },
-//    statusFail : function(inSender, inResponse) {
-//        this.$.confirmPrompt.setCaption(enyo.json.stringify(inResponse.wifi));
-//        this.$confirmPrompt.open();
-//        enyo.log("getStatus failure, results=" + enyo.json.stringify(inResponse));
-//    },
+    stationSelected: function(station) {//TODO station
+        this.$.pane.selectViewByName('stationDetails');
+    },
 
     //helper from now on
     fuelTypeSearch: function(){
@@ -76,13 +76,13 @@
     backGesture: function(inSender, inEvent) {
         inEvent.stopPropagation();
         inEvent.preventDefault();
-        if(this.$.pane.getViewIndex()!==0) {
+        if(this.$.pane.getViewIndex()> 1) {
             this.$.pane.back();
         }
         return -1;
     },
     backButtonHandler: function(sender) {
-        if(this.$.pane.getViewIndex()!==0) {
+        if(this.$.pane.getViewIndex()> 1) {
             this.$.pane.back();
         }
     },

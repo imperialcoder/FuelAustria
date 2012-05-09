@@ -2,12 +2,14 @@
     name: "DistrictSelectionView",
     kind: enyo.VFlexBox,
     className: "enyo-bg",
-    data: [],
     events: {
-        onSearchClick: "",
+        onStationSelected: "",
         onFuelTypeSearch: "",
         onClosedCheck: "",
         onBackButton: ""
+    },
+    published: {
+        data: []
     },
     components: [
         {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
@@ -43,7 +45,8 @@
                     name: "title",
                     content: $L("Fuel Austria"),
                     className: "enyo-text-header page-title"
-                }
+                },
+                {kind: "Spacer" }
             ]
         },
         {
@@ -71,27 +74,23 @@
     ],
     create: function() {
         this.inherited(arguments);
+        this.dataChanged();
         this.$.stateSpinner.show();
         this.$.getAllBezirke.call();
     },
     gotData: function(sender, response, request) {
-        enyo.log(enyo.json.stringify(response));
         if(enyo.isArray(response)) {
-            this.data = response;
+            this.setData(response);
+        } else {
+            enyo.error(enyo.json.stringify(response));
         }
         this.$.priceList.render();
 
         this.showScrim(false);
-
-        var a = this.$.searchButton.getActive();
-        this.$.searchButton.setActive(!a);
     },
     gotDataFailure: function(sender, response, request) {
-        enyo.log('failure');
+        enyo.error(enyo.json.stringify(response));
         this.showScrim(false);
-
-        var a = this.$.searchButton.getActive();
-        this.$.searchButton.setActive(!a);
     },
     gotBezirke: function(sender, response, request){
         this.federalStates = this.getFederalStates(response);
@@ -107,7 +106,8 @@
         this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
     },
     gotBezirkeFailure: function(sender, response, request){
-        enyo.log('bezirke error');
+        enyo.error('bezirke error');
+        enyo.error(enyo.json.stringify(response));
         this.$.stateSpinner.hide();
     },
     federalStateChanged: function(sender, value, oldValue) {
@@ -127,16 +127,17 @@
             this.$.districtSelector.setValue(items[0].value);
             this.$.districtSelector.itemsChanged();
             this.$.districtSpinner.hide();
+
+            //clear list
+            this.districtChanged();
         }
     },
     districtChanged: function(sender, value, oldValue) {
-        enyo.log('districtChanged');
+        this.setData([]);
+        this.$.priceList.render();
     },
     onBezirksAuswahlSucheClick: function(inSender, inTwo, inThree) {
         this.showScrim(true);
-
-        var a = inSender.getActive();
-        inSender.setActive(!a);
 
         var state = this.$.federalStateSelector.getValue();
         var district = this.$.districtSelector.getValue();
@@ -160,7 +161,7 @@
     },
 
     getItem: function(sender, index) {
-        var record = this.data[index];
+        var record = this.getData()[index];
         if (record) {
             this.$.listItem.record = record;
             this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
@@ -172,7 +173,9 @@
 
     stationSelected: function(sender, mouseEvent, index){
         var record = this.$.listItem.record;
-        enyo.log(record);
+        this.doStationSelected(record);
+//        enyo.windows.activate(undefined, "OptionView",
+//            { station: record});
     },
 
 
@@ -202,9 +205,15 @@
     showScrim: function(inShowing) {
         //this.$.scrim.setShowing(inShowing);
         //this.$.spinnerLarge.setShowing(inShowing);
+        var a = this.$.searchButton.getActive();
+        this.$.searchButton.setActive(!a);
     },
 
     backButtonClicked: function(sender, mouseEvent) {
+        this.districtChanged();
         this.doBackButton();
+    },
+    dataChanged: function(){
+        this.$.data = this.data;
     }
 });

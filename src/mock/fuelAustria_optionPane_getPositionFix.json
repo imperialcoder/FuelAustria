@@ -1,0 +1,12 @@
+{
+    "altitude": -10000000,
+    "errorCode": 0,
+    "heading": 0,
+    "horizAccuracy": -1,
+    "latitude": 37.392809,
+    "longitude": -122.040461,
+    "returnValue": true,
+    "timestamp": 1336589583000,
+    "velocity": -1,
+    "vertAccuracy": -1
+}

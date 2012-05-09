@@ -1,13 +1,16 @@
 enyo.kind({
     name: "ErrorDialog",
-    kind: "Popup",
+    kind: "ModalDialog",
     lazy: false,
     scrim: true,
-    width:"300px",
+    //width:"300px",
     published: {
         title: "",
         message: "",
-        acceptButtonCaption: "OK"
+        acceptButtonCaption: "Retry"
+    },
+    events: {
+        onButtonClick: ""
     },
 
     components: [
@@ -52,6 +55,7 @@ enyo.kind({
     },
 
     acceptClick: function() {
+        this.doButtonClick();
         this.close();
     }
 });

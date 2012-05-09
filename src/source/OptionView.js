@@ -66,6 +66,7 @@ enyo.kind({
         }
     ],
     rendered: function() {
+        this.inherited(arguments);
         this.load();
     },
     load: function(){
@@ -89,12 +90,12 @@ enyo.kind({
         this.$.getPositionFix.call();
     },
     getPosSuccess : function(inSender, inResponse) {
-        enyo.error("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
+        enyo.log("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
         this.$.getPositionFix.resubscribe = false;
         this.doCurrentPositionClick();
     },
     getPosFailure : function(inSender, inResponse) {
-        enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
+        enyo.log("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
     }
     //-- GPS --//
 });
