@@ -49,28 +49,24 @@
                 {kind: "Spacer" }
             ]
         },
-        {
-            kind: "Scroller",
-            flex: 1,
-            components: [{
-                kind: "VFlexBox",
-                className: "box-center",
-                components: [
-                    {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
-                        {kind: enyo.Spinner, name: "stateSpinner"}]},
-                    {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
-                        {kind: enyo.Spinner, name: "districtSpinner"}]},
-                    {kind: "ActivityButton", caption: "Bezirkssuche", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
+        {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
+            {kind: enyo.Spinner, name: "stateSpinner"}]},
+        {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
+            {kind: enyo.Spinner, name: "districtSpinner"}]},
+        {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
+        {kind: "Scroller", flex:1, components: [
+            {kind: "VFlexBox", className: "box-center", components: [
+                {kind: "RowGroup", caption: $L("Stations"), components: [
                     {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
                         {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
-                            {name: "gasStationName", flex: 5},
-                            {name: "price", flex: 1.2},
+                            {name: "gasStationName", flex: 4},
+                            {name: "price", flex: 2},
                             {kind: "Image", flex: 1, name:"open", width:18, height:18}
                         ]}
                     ]}
                 ]}
-            ]
-        }
+            ]}
+        ]}
     ],
     create: function() {
         this.inherited(arguments);
@@ -91,19 +87,26 @@
     gotDataFailure: function(sender, response, request) {
         enyo.error(enyo.json.stringify(response));
         this.showScrim(false);
+        //TODO: error msg
     },
     gotBezirke: function(sender, response, request){
-        this.federalStates = this.getFederalStates(response);
-        var items = [];
-        enyo.forEach(this.federalStates, function(state){
-            items.push({caption: state.bezeichnung, value: state.code, record: state});
-        }, this);
-        this.$.federalStateSelector.setItems(items);
-        this.$.federalStateSelector.setValue(items[0].value);
-        this.$.federalStateSelector.itemsChanged();
-        this.$.stateSpinner.hide();
-        this.$.districtSpinner.show();
-        this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
+        if(typeof(response)==='string') {
+            //TODO: display msg
+        } else if(typeof(response)==='object') {
+            this.federalStates = this.getFederalStates(response);
+            var items = [];
+            enyo.forEach(this.federalStates, function(state){
+                items.push({caption: state.bezeichnung, value: state.code, record: state});
+            }, this);
+            this.$.federalStateSelector.setItems(items);
+            this.$.federalStateSelector.setValue(items[0].value);
+            this.$.federalStateSelector.itemsChanged();
+            this.$.stateSpinner.hide();
+            this.$.districtSpinner.show();
+            this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
+        } else {
+            //TODO: else what?
+        }
     },
     gotBezirkeFailure: function(sender, response, request){
         enyo.error('bezirke error');
@@ -163,17 +166,17 @@
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
-            this.$.listItem.record = record;
             this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
-            this.$.price.setContent('€' +  record.spritPrice[0].amount);
+            this.$.price.setContent('€ ' +  record.spritPrice[0].amount);
             this.$.open.setSrc(this.translateBoolean(record.open));
             return true;
         }
     },
 
     stationSelected: function(sender, mouseEvent, index){
-        var record = this.$.listItem.record;
-        this.doStationSelected(record);
+        //var record = this.$.listItem.record;
+        var station = this.getData()[index];
+        this.doStationSelected(station);
 //        enyo.windows.activate(undefined, "OptionView",
 //            { station: record});
     },

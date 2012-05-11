@@ -1,7 +1,7 @@
 {
 	"id": "com.imperialcoder.fuelaustria",
-	"version": "1.0.0",
-	"vendor": "Imperialcoder",
+	"version": "0.1.0",
+	"vendor": "ImperialCoder",
 	"type": "web",
 	"main": "index.html",
 	"title": "Fuel Austria",

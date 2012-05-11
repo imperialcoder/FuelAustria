@@ -6,5 +6,6 @@
     "source/StationListItem.js",
     "source/ErrorDialog.js",
     "source/ConnectionView.js",
+    "source/StationDetailView.js",
 	"css/MainView.css"
 );
