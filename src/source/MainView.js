@@ -25,6 +25,26 @@
                 onAddressSearchClick: 'addressSearchClick'
             },
             {
+                kind: 'GpsSearchView',
+                flex: 1,
+                name: "gpsSearch",
+                lazy: true,
+                onStationSelected: 'stationSelected',
+                onFuelTypeSearch: 'fuelTypeSearch',
+                onClosedCheck: 'closedCheck',
+                onBackButton: 'backButtonHandler'
+            },
+            {
+                kind: 'AddressSearchView',
+                flex: 1,
+                name: "addressSearch",
+                lazy: true,
+                onStationSelected: 'stationSelected',
+                onFuelTypeSearch: 'fuelTypeSearch',
+                onClosedCheck: 'closedCheck',
+                onBackButton: 'backButtonHandler'
+            },
+            {
                 kind: 'DistrictSelectionView',
                 flex: 1,
                 name: "districtSelection",
@@ -52,10 +72,17 @@
         this.$.pane.selectViewByName('districtSelection');
     },
 
+    currentPositionClick: function(sender, param){
+        this.$.pane.selectViewByName('gpsSearch');
+    },
+
+    addressSearchClick: function(sender, params){
+        this.$.pane.selectViewByName('addressSearch');
+    },
+
     stationSelected: function(sender, station) {//TODO station
         this.$.pane.selectViewByName('stationDetail');
-        this.$.stationDetail.setStation(station);
-        this.$.stationDetail.setStationValues();
+        this.$.stationDetail.setStationValues(station);
     },
 
     //helper from now on

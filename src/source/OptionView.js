@@ -8,10 +8,12 @@ enyo.kind({
         onAddressSearchClick: ""
     },
     components: [
+        {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
+            {kind: "SpinnerLarge"}
+        ]},
         {
             kind: "PageHeader",
             name: "header",
-            className: "enyo-header",
             pack: "center",
             components: [
                 {
@@ -29,17 +31,6 @@ enyo.kind({
             onSuccess : "getPosSuccess",
             onFailure : "getPosFailure",
             subscribe : false
-        },
-        {name: "getBezirksData", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkStationServlet",
-            method: 'GET',
-            onSuccess: "gotData",
-            onFailure: "gotDataFailure"},
-        {name: "getAllBezirke", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkDataServlet",
-            method: 'GET',
-            onSuccess: "gotBezirke",
-            onFailure: "gotBezirkeFailure"
         },
         {
             kind: "Scroller",
@@ -70,6 +61,7 @@ enyo.kind({
         this.load();
     },
     load: function(){
+        //TODO: load from settings
         this.$.fuelGroup.setValue('DIE');
     },
     getFuelType: function() {
@@ -88,14 +80,22 @@ enyo.kind({
     onPositionBtnClick: function(inSender, inTwo, inThree) {
         this.$.getPositionFix.resubscribe = true;
         this.$.getPositionFix.call();
+        this.showScrim(true);
     },
     getPosSuccess : function(inSender, inResponse) {
-        enyo.log("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
+        enyo.error("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
         this.$.getPositionFix.resubscribe = false;
+        this.showScrim(false);
         this.doCurrentPositionClick();
     },
     getPosFailure : function(inSender, inResponse) {
-        enyo.log("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
-    }
+        enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
+        this.showScrim(false);
+    },
     //-- GPS --//
+
+    showScrim: function(inShowing) {
+        this.$.scrim.setShowing(inShowing);
+        this.$.spinnerLarge.setShowing(inShowing);
+    }
 });

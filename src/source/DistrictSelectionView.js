@@ -15,21 +15,25 @@
         {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
             {kind: "SpinnerLarge"}
         ]},
-        {name: "getBezirksData", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkStationServlet",
+        {name: "getAllStations", kind: "WebService",
+            url: "http://imperialcoder.no.de/AllStations/",
             method: 'GET',
             onSuccess: "gotData",
             onFailure: "gotDataFailure"},
-        {name: "getAllBezirke", kind: "WebService",
-            url: "http://www.spritpreisrechner.at/ts/BezirkDataServlet",
+        {name: "getStationsForDistrict", kind: "WebService",
+            url: "http://imperialcoder.no.de/DistrictStations/",
+            method: 'GET',
+            onSuccess: "gotData",
+            onFailure: "gotDataFailure"},
+        {name: "getBaseData", kind: "WebService",
+            url: "http://imperialcoder.no.de/BaseData/",
             method: 'GET',
             onSuccess: "gotBezirke",
             onFailure: "gotBezirkeFailure"
         },
         {
-            kind: "Header",
+            kind: "PageHeader",
             name: "header",
-            className: "enyo-header",
             pack: "center",
             components: [
                 {
@@ -45,8 +49,7 @@
                     name: "title",
                     content: $L("Fuel Austria"),
                     className: "enyo-text-header page-title"
-                },
-                {kind: "Spacer" }
+                }
             ]
         },
         {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
@@ -72,31 +75,36 @@
         this.inherited(arguments);
         this.dataChanged();
         this.$.stateSpinner.show();
-        this.$.getAllBezirke.call();
+        this.$.getBaseData.call();
     },
     gotData: function(sender, response, request) {
-        if(enyo.isArray(response)) {
-            this.setData(response);
-        } else {
+        if(!response.success){
+            //TODO: error msg
             enyo.error(enyo.json.stringify(response));
+        } else {
+            this.setData(response.data);
         }
         this.$.priceList.render();
 
         this.showScrim(false);
     },
     gotDataFailure: function(sender, response, request) {
+        var errorCode = response.errorCode;
+
         enyo.error(enyo.json.stringify(response));
         this.showScrim(false);
         //TODO: error msg
     },
     gotBezirke: function(sender, response, request){
-        if(typeof(response)==='string') {
-            //TODO: display msg
-        } else if(typeof(response)==='object') {
-            this.federalStates = this.getFederalStates(response);
+        if(!response.success){
+            //TODO: error msg
+            enyo.error(JSON.stringify(response));
+            this.$.stateSpinner.hide();
+            return;
+        } else {
             var items = [];
-            enyo.forEach(this.federalStates, function(state){
-                items.push({caption: state.bezeichnung, value: state.code, record: state});
+            enyo.forEach(response.states, function(state){
+                items.push({caption: state.data.bezeichnung, value: state.id, record: state.data});
             }, this);
             this.$.federalStateSelector.setItems(items);
             this.$.federalStateSelector.setValue(items[0].value);
@@ -104,14 +112,13 @@
             this.$.stateSpinner.hide();
             this.$.districtSpinner.show();
             this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
-        } else {
-            //TODO: else what?
         }
     },
     gotBezirkeFailure: function(sender, response, request){
         enyo.error('bezirke error');
         enyo.error(enyo.json.stringify(response));
         this.$.stateSpinner.hide();
+        //TODO: show error msg
     },
     federalStateChanged: function(sender, value, oldValue) {
         if(value !== oldValue){
@@ -141,28 +148,30 @@
     },
     onBezirksAuswahlSucheClick: function(inSender, inTwo, inThree) {
         this.showScrim(true);
+        var data = {};
 
-        var state = this.$.federalStateSelector.getValue();
-        var district = this.$.districtSelector.getValue();
-        var fuelType = this.doFuelTypeSearch();
-        var allDistricts = false;
+        data.federalState = this.$.federalStateSelector.getValue();
+        data.district = this.$.districtSelector.getValue();
+        data.fuel = this.doFuelTypeSearch();
 
-        var districtOrState = "PB";
-        if(!district){
-            districtOrState = "BL";
-            allDistricts = true;
+        data.closedStations = this.doClosedCheck();
+
+        if(!data.district) {
+            var url = 'http://imperialcoder.no.de/AllStations/?';
+            url += enyo.objectToQuery(data);
+
+            this.$.getAllStations.setUrl(url);
+            this.$.getAllStations.call();
+        } else {
+            var url = 'http://imperialcoder.no.de/DistrictStations/?';
+            url += enyo.objectToQuery(data);
+
+            if(this.$.getStationsForDistrict.getUrl() != url){
+                this.$.getStationsForDistrict.setUrl(url);
+            }
+            this.$.getStationsForDistrict.call();
         }
-
-        var checked = '';
-        if(this.doClosedCheck()){
-            checked = 'checked';
-        }
-
-        var data = '[' + (allDistricts ? state : district) + ', \"' + districtOrState + '\", \"' + fuelType +'\", \"' + checked + '\"]';
-
-        this.$.getBezirksData.call({data: data});
     },
-
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
@@ -172,16 +181,10 @@
             return true;
         }
     },
-
     stationSelected: function(sender, mouseEvent, index){
-        //var record = this.$.listItem.record;
         var station = this.getData()[index];
         this.doStationSelected(station);
-//        enyo.windows.activate(undefined, "OptionView",
-//            { station: record});
     },
-
-
     translateBoolean: function(open){
         if(open){
             return 'images/open.png';
@@ -189,21 +192,6 @@
             return 'images/closed.png';
         }
     },
-
-    getFederalStates: function(stateObjects){
-        var states = [];
-        states.push(stateObjects.Burgenland);
-        states.push(stateObjects.Kärnten);
-        states.push(stateObjects.Niederösterreich);
-        states.push(stateObjects.Oberösterreich);
-        states.push(stateObjects.Salzburg);
-        states.push(stateObjects.Steiermark);
-        states.push(stateObjects.Tirol);
-        states.push(stateObjects.Vorarlberg);
-        states.push(stateObjects.Wien);
-        return states;
-    },
-
     // Pass true to show scrim, false to hide scrim
     showScrim: function(inShowing) {
         //this.$.scrim.setShowing(inShowing);
@@ -211,7 +199,6 @@
         var a = this.$.searchButton.getActive();
         this.$.searchButton.setActive(!a);
     },
-
     backButtonClicked: function(sender, mouseEvent) {
         this.districtChanged();
         this.doBackButton();

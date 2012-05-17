@@ -13,9 +13,8 @@
             {kind: "SpinnerLarge"}
         ]},
         {
-            kind: "Header",
+            kind: "PageHeader",
             name: "header",
-            className: "enyo-header",
             pack: "center",
             components: [
                 {
@@ -31,8 +30,7 @@
                     name: "title",
                     content: $L("Fuel Austria"),
                     className: "enyo-text-header page-title"
-                },
-                {kind: "Spacer" }
+                }
             ]
         },
         {
@@ -82,28 +80,24 @@
             ]
         }
     ],
-    setStationValues: function(){
-        var station = this.getStation();
-        if(station){
-            //address
-            this.$.addressDrawer.setCaption(station.gasStationName);
-            this.$.addressContainer.setContent(station.address);
-            this.$.cityContainer.setContent(station.city);
-            this.$.priceContainer.setContent('€ ' +  station.spritPrice[0].amount);
-            //openinghours
-            enyo.forEach([1,2,3,4,5,6,7,8], function(order){
-                this.getOpeningHoursByOrder(order);
-            }, this);
-            this.$.opneningHoursContainer.render();
-            //contact
-            this.$.mailContainer.setContent(station.mail);
-            this.$.telephoneContainer.setContent(station.telephone);
-            this.$.faxContainer.setContent(station.fax);
-            this.$.urlContainer.setContent(station.url);
-        } else {
-            //TODO:
-        }
+    setStationValues: function(station){
+        this.setStation(station);
 
+        //address
+        this.$.addressDrawer.setCaption(station.gasStationName);
+        this.$.addressContainer.setContent(station.address);
+        this.$.cityContainer.setContent(station.city);
+        this.$.priceContainer.setContent('€ ' +  station.spritPrice[0].amount);
+        //openinghours
+        enyo.forEach([1,2,3,4,5,6,7,8], function(order){
+            this.getOpeningHoursByOrder(order);
+        }, this);
+        this.$.opneningHoursContainer.render();
+        //contact
+        this.$.mailContainer.setContent(station.mail);
+        this.$.telephoneContainer.setContent(station.telephone);
+        this.$.faxContainer.setContent(station.fax);
+        this.$.urlContainer.setContent(station.url);
     },
     getOpeningHoursByOrder: function(order){
         var openingHours = this.getStation().openingHours;

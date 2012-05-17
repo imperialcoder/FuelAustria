@@ -7,5 +7,7 @@
     "source/ErrorDialog.js",
     "source/ConnectionView.js",
     "source/StationDetailView.js",
+    "source/GPSSearchView.js",
+    "source/AddressSearchView.js",
 	"css/MainView.css"
 );
