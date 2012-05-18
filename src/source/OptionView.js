@@ -83,10 +83,9 @@ enyo.kind({
         this.showScrim(true);
     },
     getPosSuccess : function(inSender, inResponse) {
-        enyo.error("getCurrentPosition success, results=" + enyo.json.stringify(inResponse));
         this.$.getPositionFix.resubscribe = false;
         this.showScrim(false);
-        this.doCurrentPositionClick();
+        this.doCurrentPositionClick(inResponse);
     },
     getPosFailure : function(inSender, inResponse) {
         enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));

@@ -72,8 +72,9 @@
         this.$.pane.selectViewByName('districtSelection');
     },
 
-    currentPositionClick: function(sender, param){
+    currentPositionClick: function(sender, gpsData){
         this.$.pane.selectViewByName('gpsSearch');
+        this.$.gpsSearch.load(gpsData);
     },
 
     addressSearchClick: function(sender, params){

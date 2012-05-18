@@ -17,7 +17,7 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getPositionStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/GpsData/",
+            url: "http://imperialcoder.no.de/GpsStations/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
@@ -69,16 +69,30 @@
     },
     load: function(gpsData){
         this.setGpsData(gpsData);
-        //this.showScrim(true);
+        this.showScrim(true);
+
+        var data = {};
+        data.fuel = this.doFuelTypeSearch();
+        data.closedStations = this.doClosedCheck();
+        data.longi = gpsData.longitude;
+        data.lati = gpsData.latitude;
+
+        var url = 'http://imperialcoder.no.de/GpsStations/?';
+        url += enyo.objectToQuery(data);
+
+        if(this.$.getPositionStations.getUrl() != url){
+            this.$.getPositionStations.setUrl(url);
+        }
+        this.$.getPositionStations.call();
     },
     gotStations: function(sender, response, request){
         if(!response.success){
             //TODO: error msg
             enyo.error(JSON.stringify(response));
             this.showScrim(false);
-            return;
         } else {
             //load data;
+            this.setData(response.data);
             this.$.priceList.render();
             this.showScrim(false);
         }

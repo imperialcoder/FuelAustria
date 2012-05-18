@@ -49,8 +49,8 @@
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-                    {kind: "Input", hint: $L("Enter your address"), onchange: "inputChange"},
-                    {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
+                    {kind: "Input", name:"addressInput", hint: $L("Enter your address"), onchange: "inputChange"},
+                    {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onAddressSearchClick"},
                     {kind: "RowGroup", caption: $L("Stations"), components: [
                         {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
                             {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
@@ -69,7 +69,6 @@
             //TODO: error msg
             enyo.error(JSON.stringify(response));
             this.showScrim(false);
-            return;
         } else {
             //load data;
             this.$.priceList.render();
@@ -78,8 +77,24 @@
     },
     gotStationsFailure: function(sender, response, request){
         enyo.error(enyo.json.stringify(response));
+        this.showScrim(false);
         //TODO:
     },
+
+    onAddressSearchClick: function(inSender, inTwo, inThree) {
+        this.showScrim(true);
+        var data = {};
+        data.address = this.$.addressInput.getValue();
+
+        var url = 'http://imperialcoder.no.de/Address/?';
+        url += enyo.objectToQuery(data);
+
+        if(this.$.getAddressStations.getUrl() != url){
+            this.$.getAddressStations.setUrl(url);
+        }
+        this.$.getAddressStations.call();
+    },
+
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
