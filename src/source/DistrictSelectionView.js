@@ -16,17 +16,17 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getAllStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/AllStations/",
+            url: "http://imperialcoder.no.de/FuelAustria/AllStations/",
             method: 'GET',
             onSuccess: "gotData",
             onFailure: "gotDataFailure"},
         {name: "getStationsForDistrict", kind: "WebService",
-            url: "http://imperialcoder.no.de/DistrictStations/",
+            url: "http://imperialcoder.no.de/FuelAustria/DistrictStations/",
             method: 'GET',
             onSuccess: "gotData",
             onFailure: "gotDataFailure"},
         {name: "getBaseData", kind: "WebService",
-            url: "http://imperialcoder.no.de/BaseData/",
+            url: "http://imperialcoder.no.de/FuelAustria/BaseData/",
             method: 'GET',
             onSuccess: "gotBezirke",
             onFailure: "gotBezirkeFailure"
@@ -157,13 +157,13 @@
         data.closedStations = this.doClosedCheck();
 
         if(!data.district) {
-            var url = 'http://imperialcoder.no.de/AllStations/?';
+            var url = 'http://imperialcoder.no.de/FuelAustria/AllStations/?';
             url += enyo.objectToQuery(data);
 
             this.$.getAllStations.setUrl(url);
             this.$.getAllStations.call();
         } else {
-            var url = 'http://imperialcoder.no.de/DistrictStations/?';
+            var url = 'http://imperialcoder.no.de/FuelAustria/DistrictStations/?';
             url += enyo.objectToQuery(data);
 
             if(this.$.getStationsForDistrict.getUrl() != url){

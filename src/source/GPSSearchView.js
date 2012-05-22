@@ -17,7 +17,7 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getPositionStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/GpsStations/",
+            url: "http://imperialcoder.no.de/FuelAustria/GpsStations/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
@@ -77,7 +77,7 @@
         data.longi = gpsData.longitude;
         data.lati = gpsData.latitude;
 
-        var url = 'http://imperialcoder.no.de/GpsStations/?';
+        var url = 'http://imperialcoder.no.de/FuelAustria/GpsStations/?';
         url += enyo.objectToQuery(data);
 
         if(this.$.getPositionStations.getUrl() != url){

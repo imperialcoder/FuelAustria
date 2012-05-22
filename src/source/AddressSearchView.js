@@ -16,7 +16,13 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getAddressStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/Address/",
+            url: "http://imperialcoder.no.de/FuelAustria/Address/",
+            method: 'GET',
+            onSuccess: "gotStations",
+            onFailure: "gotStationsFailure"
+        },
+        {name: "plzLookup", kind: "WebService",
+            url: "http://imperialcoder.no.de/FuelAustria/PlzLookup/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
@@ -49,7 +55,7 @@
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-                    {kind: "Input", name:"addressInput", hint: $L("Enter your address"), onchange: "inputChange"},
+                    {kind: "Input", name:"plzInput", hint: $L("Enter your ZIP"), oninput: "inputChange", autoKeyModifier: "num-lock"},
                     {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onAddressSearchClick"},
                     {kind: "RowGroup", caption: $L("Stations"), components: [
                         {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
@@ -81,12 +87,20 @@
         //TODO:
     },
 
+    inputChange: function(sender, event, value){
+        try{
+
+        } catch(e) {
+            enyo.log(e);
+        }
+    },
+
     onAddressSearchClick: function(inSender, inTwo, inThree) {
         this.showScrim(true);
         var data = {};
-        data.address = this.$.addressInput.getValue();
+        data.address = this.$.plzInput.getValue();
 
-        var url = 'http://imperialcoder.no.de/Address/?';
+        var url = 'http://imperialcoder.no.de/FuelAustria/Address/?';
         url += enyo.objectToQuery(data);
 
         if(this.$.getAddressStations.getUrl() != url){
