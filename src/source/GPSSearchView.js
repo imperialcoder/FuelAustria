@@ -22,6 +22,10 @@
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
         },
+		{
+			name: "dialogError",
+			kind: "ErrorDialog"
+		},
         {
             kind: "PageHeader",
             name: "header",
@@ -54,7 +58,7 @@
                         {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
                             {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
                                 {name: "gasStationName", flex: 4},
-                                {name: "price", flex: 2},
+                                {name: "price", flex: 1},
                                 {kind: "Image", flex: 1, name:"open", width:18, height:18}
                             ]}
                         ]}
@@ -87,9 +91,9 @@
     },
     gotStations: function(sender, response, request){
         if(!response.success){
-            //TODO: error msg
             enyo.error(JSON.stringify(response));
             this.showScrim(false);
+			this.handleError(response, $L('ErrorGpsData'));
         } else {
             //load data;
             this.setData(response.data);
@@ -99,13 +103,19 @@
     },
     gotStationsFailure: function(sender, response, request){
         enyo.error(enyo.json.stringify(response));
-        //TODO:
+		this.handleError(response, $L('ErrorGpsData'));
     },
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
             this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
-            this.$.price.setContent('€ ' +  record.spritPrice[0].amount);
+			var amount = '';
+			if(record.spritPrice[0] && record.spritPrice[0].amount){
+				amount = '€ ' + record.spritPrice[0].amount;
+			} else {
+				amount = $L('NotCheapest');
+			}
+			this.$.price.setContent(amount);
             this.$.open.setSrc(this.translateBoolean(record.open));
             return true;
         }
@@ -132,5 +142,21 @@
     showScrim: function(inShowing) {
         this.$.scrim.setShowing(inShowing);
         this.$.spinnerLarge.setShowing(inShowing);
-    }
+    },
+	handleError: function(response, caption){
+		enyo.error(enyo.json.stringify(response));
+		var errorText = '';
+		if(response.errorCode){
+			enyo.error('in error code')
+			errorText = response.errorCode === 5 ? $L('GpsNotEnabled') : response.errorCode === 8 ? $L('GpsNotAllowed') : '';
+			enyo.error('errortext at end: ' + errorText)
+		}
+		if(errorText === ''){
+			errorText = response.errorText || enyo.json.stringify(response);
+		}
+		this.showErrorDialog(caption, errorText, 'OK')
+	},
+	showErrorDialog: function(caption, message, buttonName){
+		this.$.dialogError.openAtCenter(caption, message, buttonName);
+	}
 });

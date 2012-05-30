@@ -70,6 +70,7 @@
 
     districtSearchClick: function(sender){
         this.$.pane.selectViewByName('districtSelection');
+		this.$.districtSelection.load();
     },
 
     currentPositionClick: function(sender, gpsData){
@@ -81,7 +82,7 @@
         this.$.pane.selectViewByName('addressSearch');
     },
 
-    stationSelected: function(sender, station) {//TODO station
+    stationSelected: function(sender, station) {
         this.$.pane.selectViewByName('stationDetail');
         this.$.stationDetail.setStationValues(station);
     },
