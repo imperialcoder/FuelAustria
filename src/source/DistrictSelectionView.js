@@ -9,7 +9,8 @@
         onBackButton: ""
     },
     published: {
-        data: []
+        data: [],
+		initialized: false
     },
     components: [
         {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
@@ -31,7 +32,11 @@
             onSuccess: "gotBezirke",
             onFailure: "gotBezirkeFailure"
         },
-        {
+		{
+			name: "dialogError",
+			kind: "ErrorDialog"
+		},
+		{
             kind: "PageHeader",
             name: "header",
             pack: "center",
@@ -57,30 +62,33 @@
         {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
             {kind: enyo.Spinner, name: "districtSpinner"}]},
         {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
-        {kind: "Scroller", flex:1, components: [
-            {kind: "VFlexBox", className: "box-center", components: [
-                {kind: "RowGroup", caption: $L("Stations"), components: [
-                    {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-                        {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
-                            {name: "gasStationName", flex: 4},
-                            {name: "price", flex: 2},
-                            {kind: "Image", flex: 1, name:"open", width:18, height:18}
-                        ]}
-                    ]}
-                ]}
-            ]}
-        ]}
+		{kind: "Scroller", flex:1, components: [
+			{kind: "VFlexBox", className: "box-center", components: [
+				{kind: "RowGroup", caption: $L("Stations"), components: [
+					{kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
+						{kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
+							{name: "gasStationName", flex: 4},
+							{name: "price", flex: 2},
+							{kind: "Image", flex: 1, name:"open", width:18, height:18}
+						]}
+					]}
+				]}
+			]}
+		]}
     ],
     create: function() {
         this.inherited(arguments);
         this.dataChanged();
-        this.$.stateSpinner.show();
-        this.$.getBaseData.call();
     },
+	load: function() {
+		if(!this.getInitialized()){
+			this.$.stateSpinner.show();
+			this.$.getBaseData.call();
+		}
+	},
     gotData: function(sender, response, request) {
         if(!response.success){
-            //TODO: error msg
-            enyo.error(enyo.json.stringify(response));
+			this.handleError(response, $L('ErrorDistrictData'));
         } else {
             this.setData(response.data);
         }
@@ -89,17 +97,15 @@
         this.showScrim(false);
     },
     gotDataFailure: function(sender, response, request) {
-        var errorCode = response.errorCode;
-
         enyo.error(enyo.json.stringify(response));
         this.showScrim(false);
-        //TODO: error msg
+		this.handleError(response, $L('ErrorDistrictData'));
     },
     gotBezirke: function(sender, response, request){
         if(!response.success){
-            //TODO: error msg
             enyo.error(JSON.stringify(response));
             this.$.stateSpinner.hide();
+			this.handleError(response, $L('ErrorBaseData'));
             return;
         } else {
             var items = [];
@@ -112,13 +118,14 @@
             this.$.stateSpinner.hide();
             this.$.districtSpinner.show();
             this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
+			this.setInitialized(true);
         }
     },
     gotBezirkeFailure: function(sender, response, request){
         enyo.error('bezirke error');
         enyo.error(enyo.json.stringify(response));
         this.$.stateSpinner.hide();
-        //TODO: show error msg
+		this.handleError(response, $L('ErrorBaseData'));
     },
     federalStateChanged: function(sender, value, oldValue) {
         if(value !== oldValue){
@@ -176,7 +183,13 @@
         var record = this.getData()[index];
         if (record) {
             this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
-            this.$.price.setContent('€ ' +  record.spritPrice[0].amount);
+			var amount = '';
+			if(record.spritPrice[0].amount){
+				amount = '€ ' + record.spritPrice[0].amount;
+			} else {
+				amount = $L('NotCheapest');
+			}
+            this.$.price.setContent(amount);
             this.$.open.setSrc(this.translateBoolean(record.open));
             return true;
         }
@@ -194,16 +207,25 @@
     },
     // Pass true to show scrim, false to hide scrim
     showScrim: function(inShowing) {
-        //this.$.scrim.setShowing(inShowing);
-        //this.$.spinnerLarge.setShowing(inShowing);
-        var a = this.$.searchButton.getActive();
-        this.$.searchButton.setActive(!a);
-    },
+		//this.$.scrim.setShowing(inShowing);
+		//this.$.spinnerLarge.setShowing(inShowing);
+		var a = this.$.searchButton.getActive();
+		this.$.searchButton.setActive(!a);
+	},
     backButtonClicked: function(sender, mouseEvent) {
         this.districtChanged();
         this.doBackButton();
     },
     dataChanged: function(){
         this.$.data = this.data;
-    }
+		this.$.initialized = this.initialized;
+    },
+	handleError: function(response, caption){
+		enyo.error(enyo.json.stringify(response));
+		var errorText = response.errorText || enyo.json.stringify(response);
+		this.showErrorDialog(caption, errorText, 'OK')
+	},
+	showErrorDialog: function(caption, message, buttonName){
+		this.$.dialogError.openAtCenter(caption, message, buttonName);
+	}
 });
