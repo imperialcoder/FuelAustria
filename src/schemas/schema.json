@@ -1,0 +1,34 @@
+[
+    {
+        "table": "favourite_fuel_type",
+        "columns": [
+            {
+                "column": "rowID",
+                "type": "INTEGER",
+                "constraints": ["PRIMARY KEY"]
+            },
+            {
+                "column": "type",
+                "type": "TEXT"
+            }
+        ]
+    },
+    {
+        "table": "favourite_district",
+        "columns": [
+            {
+                "column": "rowID",
+                "type": "INTEGER",
+                "constraints": ["PRIMARY KEY"]
+            },
+            {
+                "column": "federalStateID",
+                "type": "INTEGER"
+            },
+            {
+                "column": "districtID",
+                "type": "INTEGER"
+            }
+        ]
+    }
+]
