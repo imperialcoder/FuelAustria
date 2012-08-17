@@ -1,14 +1,29 @@
-#fuelAustria_gpsSearch_price {
+.rightAlign {
 text-align: right;
-padding-right: 20px;
 }
 
-#fuelAustria_districtSelection_price {
-text-align: right;
-padding-right: 20px;
+.generalFont {
+    font-size:12pt;
 }
 
-#fuelAustria_stationDetail_priceContainer {
-text-align: right;
-padding-right: 20px;
+.imageSep {
+    padding-right: 10px;
+}
+
+.detailItem {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size:12pt;
+}
+
+.enyo-modaldialog > * { height:100%; }
+
+.enyo-bg {
+    background-color: #f5f5f5;
+}
+.enyo-header-inner{
+    background-color: #f5f5f5;
+}
+.enyo-button {
+    background-color: #f5f5f5;
 }

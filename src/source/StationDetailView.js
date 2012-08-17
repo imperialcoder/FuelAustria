@@ -41,28 +41,11 @@
                 className: "box-center",
                 components: [
                     {kind: "DividerDrawer", name: "addressDrawer", caption: $L("Address"), open:true, components: [
-                        {layoutKind: "HFlexLayout", components:[
-                            {layoutKind: "VFlexLayout", flex:2, components:[
-                                {kind:"Control", name:"addressContainer", content:""},
-                                {kind:"Control", name:"cityContainer", content:""}
-                            ]},
-                            {kind:"Spacer", flex:0.5},
-                            {kind:"Control", name:"priceContainer", flex:1, content:""}
-                        ]}
+						{ kind:"AddressPriceItem", name:"addressPrice" }
                     ]},
                     {kind: "DividerDrawer", name:"opneningHoursContainer", caption: $L("OpeningHours"), open:false, components: []},
                     {kind: "DividerDrawer", caption: $L("Contact"), open:false, components: [
-                        {content: $L("Mail"), flex:1},
-                        {kind:"Control", name:"mailContainer", content:""},
-                        {kind:"Spacer"},
-                        {content: $L("Telephone")},
-                        {kind:"Control", name:"telephoneContainer", content:""},
-                        {kind:"Spacer"},
-                        {content: $L("Fax")},
-                        {kind:"Control", name:"faxContainer", content:""},
-                        {kind:"Spacer"},
-                        {content: $L("URL")},
-                        {kind:"Control", name:"urlContainer", content:""}
+                        {kind:"ContactItem", name:"contact"}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Offer"), open:false, components: [
                         {kind:"Control", name:"OfferContent", content: ""}
@@ -74,7 +57,7 @@
                         {kind:"Control", name:"miscContent", content: ""}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Map"), open:false, components: [
-                        {kind:"Control", name:"mapContent", content: ""}
+                        {kind:"Image", name:"mapImage"}
                     ]}
                 ]}
             ]
@@ -84,20 +67,38 @@
         this.setStation(station);
 
         //address
-        this.$.addressDrawer.setCaption(station.gasStationName);
-        this.$.addressContainer.setContent(station.address);
-        this.$.cityContainer.setContent(station.city);
-        this.$.priceContainer.setContent('€ ' +  station.spritPrice[0].amount);
+        this.$.addressDrawer.setCaption(station.gasStationName || '-');
+		this.$.addressPrice.setData(station.address, station.city, station.spritPrice[0].amount);
         //openinghours
+		enyo.forEach(this.$.opneningHoursContainer.getControls(), function(control){
+			control.destroy();
+		}, this);
         enyo.forEach([1,2,3,4,5,6,7,8], function(order){
             this.getOpeningHoursByOrder(order);
         }, this);
         this.$.opneningHoursContainer.render();
         //contact
-        this.$.mailContainer.setContent(station.mail);
-        this.$.telephoneContainer.setContent(station.telephone);
-        this.$.faxContainer.setContent(station.fax);
-        this.$.urlContainer.setContent(station.url);
+		this.$.contact.setData(station.mail, station.telephone, station.fax, station.url);
+
+		//map
+		var deviceInfo = enyo.fetchDeviceInfo();
+		deviceInfo = deviceInfo || { screenHeight: 640, screenWidth: 640 };
+		if(deviceInfo.platformVersionMajor && deviceInfo.platformVersionMajor < 3){
+			if(deviceInfo.screenWidth > 320){
+				deviceInfo.screenWidth = 320;
+			}
+			var orientation = enyo.getWindowOrientation();
+			enyo.error(orientation);
+			if(orientation && (orientation === 'right' || orientation === 'left')){
+				var width = deviceInfo.screenWidth;
+				deviceInfo.screenWidth = deviceInfo.screenHeight;
+				deviceInfo.screenHeight = width;
+			}
+		}
+
+		var mapSrc = 'http://maps.google.com/maps/api/staticmap?center=LAT,LONG&zoom=14&size=WIDTHxHEIGHT&maptype=roadmap&markers=color:red|label:|LAT,LONG|size:tiny&sensor=false';
+		mapSrc = mapSrc.replace(/LAT/g, station.latitude).replace(/LONG/g, station.longitude).replace(/WIDTH/g, deviceInfo.screenWidth).replace(/HEIGHT/g, deviceInfo.screenHeight);
+		this.$.mapImage.setSrc(mapSrc);
     },
     getOpeningHoursByOrder: function(order){
         var openingHours = this.getStation().openingHours;
@@ -105,27 +106,19 @@
             enyo.forEach(openingHours, function(openingHour){
                 if(openingHour.day.order === order){
                     var hours = openingHour.beginn + ' - ' + openingHour.end;
-                    this.$.opneningHoursContainer.createComponent({
-                        kind: "Control",
-                        content: openingHour.day.dayLabel,
-                        owner: this
-                    });
-                    this.$.opneningHoursContainer.createComponent({
-                        kind: "Spacer",
-                        owner: this
-                    });
-                    this.$.opneningHoursContainer.createComponent({
-                        kind: "Control",
-                        content: hours,
-                        owner: this
-                    });
+					this.createComponent({
+						kind: 'OpeningItem',
+						name: order,
+						container: this.$.opneningHoursContainer,
+						day: openingHour.day.dayLabel,
+						time: hours
+					});
                     return false;
                 }
             }, this);
         }
     },
     backButtonClicked: function(sender, mouseEvent) {
-        //this.$.addressDrawer.destroyControls();
         this.doBackButton();
     }
 });

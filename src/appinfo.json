@@ -1,10 +1,18 @@
 {
 	"id": "com.imperialcoder.fuelaustria",
-	"version": "0.1.0",
-	"vendor": "ImperialCoder",
+	"version": "0.1.1",
+	"vendor": "imperialcoder",
+    "vendorurl": "http://www.imperialcoder.com",
 	"type": "web",
 	"main": "index.html",
 	"title": "Fuel Austria",
 	"icon": "icon.png",
-	"uiRevision":2
+	"uiRevision":2,
+    "keywords":[
+        "Fuel",
+        "Austria",
+        "Sprit",
+        "Diesel",
+        "Benzin"
+    ]
 }

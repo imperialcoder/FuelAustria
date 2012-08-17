@@ -17,17 +17,17 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getAllStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/AllStations/",
+            url: "http://service.imperialcoder.com/FuelAustria/AllStations/",
             method: 'GET',
             onSuccess: "gotData",
             onFailure: "gotDataFailure"},
         {name: "getStationsForDistrict", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/DistrictStations/",
+            url: "http://service.imperialcoder.com/FuelAustria/DistrictStations/",
             method: 'GET',
             onSuccess: "gotData",
             onFailure: "gotDataFailure"},
         {name: "getBaseData", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/BaseData/",
+            url: "http://service.imperialcoder.com/FuelAustria/BaseData/",
             method: 'GET',
             onSuccess: "gotBezirke",
             onFailure: "gotBezirkeFailure"
@@ -66,7 +66,7 @@
 			{kind: "VFlexBox", className: "box-center", components: [
 				{kind: "RowGroup", caption: $L("Stations"), components: [
 					{kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-						{kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
+						{kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", className: 'generalFont', onclick: "stationSelected",  components: [
 							{name: "gasStationName", flex: 4},
 							{name: "price", flex: 2},
 							{kind: "Image", flex: 1, name:"open", width:18, height:18}
@@ -164,13 +164,13 @@
         data.closedStations = this.doClosedCheck();
 
         if(!data.district) {
-            var url = 'http://imperialcoder.no.de/FuelAustria/AllStations/?';
+            var url = 'http://service.imperialcoder.com/FuelAustria/AllStations/?';
             url += enyo.objectToQuery(data);
 
             this.$.getAllStations.setUrl(url);
             this.$.getAllStations.call();
         } else {
-            var url = 'http://imperialcoder.no.de/FuelAustria/DistrictStations/?';
+            var url = 'http://service.imperialcoder.com/FuelAustria/DistrictStations/?';
             url += enyo.objectToQuery(data);
 
             if(this.$.getStationsForDistrict.getUrl() != url){

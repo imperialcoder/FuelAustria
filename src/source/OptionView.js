@@ -1,4 +1,4 @@
-enyo.kind({
+﻿enyo.kind({
     name: "OptionView",
     kind: enyo.VFlexBox,
     className: "enyo-bg",

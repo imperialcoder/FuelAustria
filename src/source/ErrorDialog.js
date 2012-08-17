@@ -1,8 +1,8 @@
-enyo.kind({
+﻿enyo.kind({
     name: "ErrorDialog",
     kind: "ModalDialog",
     lazy: false,
-    scrim: true,
+	contentHeight:"100%", width:"80%", height:"80%",
     //width:"300px",
     published: {
         title: "",
@@ -14,11 +14,13 @@ enyo.kind({
     },
 
     components: [
-        { kind:"VFlexBox", components: [
-            { name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
-            { name: "message", className: "enyo-paragraph", allowHtml: true },
-            { name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick" }
-        ]}
+		{kind: "Scroller", flex:1, components: [
+			{ kind:"VFlexBox", components: [
+				{ name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
+				{ name: "message", className: "enyo-paragraph", allowHtml: true },
+				{ name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick" }
+			]}
+		]}
     ],
 
     create: function() {

@@ -17,7 +17,7 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getPositionStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/GpsStations/",
+            url: "http://service.imperialcoder.com/FuelAustria/GpsStations/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
@@ -56,11 +56,7 @@
                 components: [
                     {kind: "RowGroup", caption: $L("Stations"), components: [
                         {kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-                            {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", onclick: "stationSelected",  components: [
-                                {name: "gasStationName", flex: 4},
-                                {name: "price", flex: 1},
-                                {kind: "Image", flex: 1, name:"open", width:18, height:18}
-                            ]}
+                            {kind: "StationListItem", name:'listItem', tapHighlight: true, onclick: "stationSelected"}
                         ]}
                     ]}
                 ]}
@@ -81,7 +77,7 @@
         data.longi = gpsData.longitude;
         data.lati = gpsData.latitude;
 
-        var url = 'http://imperialcoder.no.de/FuelAustria/GpsStations/?';
+        var url = 'http://service.imperialcoder.com/FuelAustria/GpsStations/?';
         url += enyo.objectToQuery(data);
 
         if(this.$.getPositionStations.getUrl() != url){
@@ -108,28 +104,22 @@
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
-            this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
 			var amount = '';
 			if(record.spritPrice[0] && record.spritPrice[0].amount){
 				amount = '€ ' + record.spritPrice[0].amount;
 			} else {
-				amount = $L('NotCheapest');
+				//amount = $L('NotCheapest');
+				amount = '-';
 			}
-			this.$.price.setContent(amount);
-            this.$.open.setSrc(this.translateBoolean(record.open));
+			this.$.listItem.setGasStationName(index + 1 + '. ' + record.gasStationName);
+			this.$.listItem.setPrice(amount);
+            this.$.listItem.setOpen(record.open);
             return true;
         }
     },
     stationSelected: function(sender, mouseEvent, index){
         var station = this.getData()[index];
         this.doStationSelected(station);
-    },
-    translateBoolean: function(open){
-        if(open){
-            return 'images/open.png';
-        } else {
-            return 'images/closed.png';
-        }
     },
     //
     dataChanged: function(){

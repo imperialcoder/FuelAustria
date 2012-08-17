@@ -16,13 +16,13 @@
             {kind: "SpinnerLarge"}
         ]},
         {name: "getAddressStations", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/Address/",
+            url: "http://service.imperialcoder.com/FuelAustria/Address/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
         },
         {name: "plzLookup", kind: "WebService",
-            url: "http://imperialcoder.no.de/FuelAustria/PlzLookup/",
+            url: "http://service.imperialcoder.com/FuelAustria/PlzLookup/",
             method: 'GET',
             onSuccess: "gotStations",
             onFailure: "gotStationsFailure"
@@ -100,7 +100,7 @@
         var data = {};
         data.address = this.$.plzInput.getValue();
 
-        var url = 'http://imperialcoder.no.de/FuelAustria/Address/?';
+        var url = 'http://service.imperialcoder.com/FuelAustria/Address/?';
         url += enyo.objectToQuery(data);
 
         if(this.$.getAddressStations.getUrl() != url){

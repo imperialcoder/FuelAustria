@@ -2,12 +2,14 @@
 	"source/MainView.js",
     "source/OptionView.js",
     "source/DistrictSelectionView.js",
-    "source/StationListView.js",
-    "source/StationListItem.js",
+    "source/OpeningItem.js",
+	"source/StationListItem.js",
     "source/ErrorDialog.js",
     "source/ConnectionView.js",
     "source/StationDetailView.js",
     "source/GPSSearchView.js",
     "source/AddressSearchView.js",
+	"source/AddressPriceItem.js",
+	"source/ContactItem.js",
 	"css/MainView.css"
 );
