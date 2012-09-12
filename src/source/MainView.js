@@ -2,12 +2,11 @@
 	name: "FuelAustria",
     kind: enyo.VFlexBox,
     className: "enyo-bg",
-    transitionKind: "enyo.transitions.LeftRightFlyin",
     components: [
-        {kind: "ApplicationEvents", onBack: "backGesture"},
-        {kind: "AppMenu", components: [
-            {caption: "About", onclick: "openAbout"}
-        ]},
+        {kind: "ApplicationEvents", onBack: "backGesture", onLoad: "loadValues", onUnload: "saveValues"},
+		{kind: "AppMenu", components: [
+			{caption: "About", onclick: "openAbout"}
+		]} ,
         { kind: "Pane", flex: 1, onSelectView: "viewSelected", components: [
             {
                 name: "connectionPane",
@@ -19,7 +18,7 @@
                 name: "optionPane",
                 kind: "OptionView",
                 flex: 1,
-                lazy: true,
+                //lazy: true,
                 onDistrictSearchClick: "districtSearchClick",
                 onCurrentPositionClick: "currentPositionClick",
                 onAddressSearchClick: 'addressSearchClick'
@@ -30,7 +29,7 @@
                 name: "gpsSearch",
                 lazy: true,
                 onStationSelected: 'stationSelected',
-                onFuelTypeSearch: 'fuelTypeSearch',
+                onFuelTypeSearch: 'getFuelType',
                 onClosedCheck: 'closedCheck',
                 onBackButton: 'backButtonHandler'
             },
@@ -40,7 +39,7 @@
                 name: "addressSearch",
                 lazy: true,
                 onStationSelected: 'stationSelected',
-                onFuelTypeSearch: 'fuelTypeSearch',
+                onFuelTypeSearch: 'getFuelType',
                 onClosedCheck: 'closedCheck',
                 onBackButton: 'backButtonHandler'
             },
@@ -50,7 +49,7 @@
                 name: "districtSelection",
                 lazy: true,
                 onStationSelected: 'stationSelected',
-                onFuelTypeSearch: 'fuelTypeSearch',
+                onFuelTypeSearch: 'getFuelType',
                 onClosedCheck: 'closedCheck',
                 onBackButton: 'backButtonHandler'
             },
@@ -73,9 +72,9 @@
 		this.$.districtSelection.load();
     },
 
-    currentPositionClick: function(sender, gpsData){
+    currentPositionClick: function(sender, config){
         this.$.pane.selectViewByName('gpsSearch');
-        this.$.gpsSearch.load(gpsData);
+        this.$.gpsSearch.setGpsData(config);
     },
 
     addressSearchClick: function(sender, params){
@@ -87,12 +86,13 @@
         this.$.stationDetail.setStationValues(station);
     },
 
-    //helper from now on
-    fuelTypeSearch: function(){
+    //helper functions
+    getFuelType: function(){
         return this.$.optionPane.getFuelType();
     },
-    closedCheck: function(){
-        return this.$.optionPane.getClosedCheck();
+
+    getClosedStations: function(){
+        return this.$.optionPane.getClosedStations();
     },
 
     backGesture: function(inSender, inEvent) {
@@ -110,6 +110,22 @@
     },
 
     viewSelected: function(inSender, inView, inPreviousView) {
-        //TODO
-    }
+        //todo
+    },
+	loadValues: function() {
+		var config = localStorage.getItem("fuelAustriaSettings") || enyo.json.stringify({
+			fuelType: 'DIE',
+			includeClosed: true
+		});
+		config = enyo.json.parse(config);
+		this.$.optionPane.setFuelType(config.fuelType);
+		this.$.optionPane.setClosedStations(config.includeClosed);
+	},
+	saveValues: function () {
+		var config =  enyo.json.stringify({
+			fuelType: this.getFuelType(),
+			includeClosed: this.getClosedStations()
+		});
+		localStorage.setItem("fuelAustriaSettings", config);
+	}
 });

@@ -14,6 +14,7 @@
         {
             kind: "PageHeader",
             name: "header",
+			className: "enyo-header-dark",
             pack: "center",
             components: [
                 {
@@ -43,37 +44,43 @@
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-                    {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick"},
+                    {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
+						{kind: "Image", src: 'images/pin.png'}
+					]},
                     {kind: "IconButton", caption: "Adresse", icon: "images/map.png", onclick: 'onAdressSucheClick'},
                     {kind: "IconButton", caption: "Bezirkssuche", icon: "images/map.png", onclick: "onBezirksSucheClick"},
-                    {kind: "RadioGroup", name: "fuelGroup", onclick: "fuelGroupClick",
-                        components: [
-                            {caption: "Super 95",value: "SUP"},
-                            {caption: "Diesel", value: "DIE"}
-                        ]
-                    },
-                    {kind: "HFlexBox", align: "center", tapHighlight: false, components: [
-                        {kind: "CheckBox", name:"includeClosedCheck", checked: true, onChange: "checkboxClicked" },
-                        {content: "&nbsp;Geschlossene anzeigen"}
-                    ]}
+					{kind: "Group", caption: $L("Settings"), /*style: "width: 500px", */ components: [
+						{kind: "RadioGroup", name: "fuelGroup", onclick: "fuelGroupClick",
+							components: [
+								{caption: "Super 95",value: "SUP"},
+								{caption: "Diesel", value: "DIE"}
+							]
+						},
+						{kind: "HFlexBox", align: "center", tapHighlight: false, components: [
+							{kind: "CheckBox", name:"includeClosedCheck", caption: "Geschlossene anzeigen", style: "margin-right:10px"},
+							{content: "Geschlossene anzeigen"}
+						]}
+					]},
+					{kind:"Control", name:"enyoImg", className: 'enyoImg', style: 'height:100%;width:100%'}
                 ]}
             ]
         }
     ],
     rendered: function() {
         this.inherited(arguments);
-        this.load();
-    },
-    load: function(){
-        //TODO: load from settings
-        this.$.fuelGroup.setValue('DIE');
     },
     getFuelType: function() {
         return this.$.fuelGroup.getValue();
     },
-    getClosedCheck: function() {
-        return this.$.includeClosedCheck.checked;
+	setFuelType: function(type) {
+		this.$.fuelGroup.setValue(type);
+	},
+    getClosedStations: function() {
+        return this.$.includeClosedCheck.getChecked();
     },
+	setClosedStations: function(closed) {
+		this.$.includeClosedCheck.setChecked(closed);
+	},
     onBezirksSucheClick: function(sender) {
         this.doDistrictSearchClick();
     },
@@ -88,8 +95,9 @@
     },
     getPosSuccess : function(inSender, inResponse) {
         this.$.getPositionFix.resubscribe = false;
-        this.showScrim(false);
-        this.doCurrentPositionClick(inResponse);
+        this.showScrim(false)
+		var config = { gpsData: inResponse, config: { fuelType: this.getFuelType(), closedStations: this.getClosedStations() }};
+        this.doCurrentPositionClick(config);
     },
     getPosFailure : function(inSender, inResponse) {
         enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
@@ -112,6 +120,7 @@
 	showErrorDialog: function(caption, message, buttonName){
 		this.$.dialogError.openAtCenter(caption, message, buttonName);
 	},
+
     //-- GPS --//
     showScrim: function(inShowing) {
         //this.$.scrim.setShowing(inShowing);

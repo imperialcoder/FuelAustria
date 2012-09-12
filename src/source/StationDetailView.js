@@ -15,16 +15,17 @@
         {
             kind: "PageHeader",
             name: "header",
+			className: 'enyo-header-dark',
             pack: "center",
             components: [
-                {
-                    kind: "ToolButton",
-                    name: 'back',
-                    icon: "images/arrow-left.png",
-                    className: "enyo-light-menu-button",
-                    onclick: 'backButtonClicked'
-                },
-                {kind: "Spacer" },
+//                {
+//                    kind: "ToolButton",
+//                    name: 'back',
+//                    icon: "images/arrow-left.png",
+//                    className: "enyo-light-menu-button",
+//                    onclick: 'backButtonClicked'
+//                },
+//                {kind: "Spacer" },
                 {
                     kind: "Control",
                     name: "title",

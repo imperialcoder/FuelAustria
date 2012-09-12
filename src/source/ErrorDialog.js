@@ -1,10 +1,10 @@
 ﻿enyo.kind({
     name: "ErrorDialog",
     kind: "ModalDialog",
-    lazy: false,
+	lazy: false,
 	contentHeight:"100%", width:"80%", height:"80%",
     //width:"300px",
-    published: {
+	published: {
         title: "",
         message: "",
         acceptButtonCaption: "Retry"
@@ -14,12 +14,11 @@
     },
 
     components: [
-		{kind: "Scroller", flex:1, components: [
-			{ kind:"VFlexBox", components: [
-				{ name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
-				{ name: "message", className: "enyo-paragraph", allowHtml: true },
-				{ name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick" }
-			]}
+		{ kind: "VFlexBox", components: [
+			{ name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
+			{ kind: "Scroller", flex: 1, components: [ { content:"here's a bunch of content<br><br><br><br>"} ]},
+			{ name: "message", className: "enyo-paragraph", allowHtml: true },
+			{ name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick" }
 		]}
     ],
 

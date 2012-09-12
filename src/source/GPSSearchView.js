@@ -29,16 +29,17 @@
         {
             kind: "PageHeader",
             name: "header",
+			className: "enyo-header-dark",
             pack: "center",
             components: [
-                {
-                    kind: "ToolButton",
-                    name: 'back',
-                    icon: "images/arrow-left.png",
-                    className: "enyo-light-menu-button",
-                    onclick: 'backButtonClicked'
-                },
-                {kind: "Spacer" },
+//                {
+//                    kind: "ToolButton",
+//                    name: 'back',
+//                    icon: "images/arrow-left.png",
+//                    className: "enyo-light-menu-button",
+//                    onclick: 'backButtonClicked'
+//                },
+//                {kind: "Spacer" },
                 {
                     kind: "Control",
                     name: "title",
@@ -66,8 +67,9 @@
     create: function() {
         this.inherited(arguments);
         this.dataChanged();
+		this.gpsDataChanged();
     },
-    load: function(gpsData){
+    /*load: function(gpsData){
         this.setGpsData(gpsData);
         this.showScrim(true);
 
@@ -84,7 +86,7 @@
             this.$.getPositionStations.setUrl(url);
         }
         this.$.getPositionStations.call();
-    },
+    },*/
     gotStations: function(sender, response, request){
         if(!response.success){
             enyo.error(JSON.stringify(response));
@@ -123,9 +125,30 @@
     },
     //
     dataChanged: function(){
-        this.$.data = this.data;
-        this.$.gpsData = this.gpsData;
+		enyo.log('data changed');
     },
+	gpsDataChanged: function(){
+		if(this.gpsData.config){
+			this.showScrim(true);
+
+			var config = this.gpsData.config;
+			var gpsData = this.gpsData.gpsData;
+
+			var data = {};
+			data.fuel = config.fuelType;
+			data.closedStations = config.closedStations ? 'checked' : '';
+			data.longi = gpsData.longitude;
+			data.lati = gpsData.latitude;
+
+			var url = 'http://service.imperialcoder.com/FuelAustria/GpsStations/?';
+			url += enyo.objectToQuery(data);
+
+			if(this.$.getPositionStations.getUrl() != url){
+				this.$.getPositionStations.setUrl(url);
+			}
+			this.$.getPositionStations.call();
+		}
+	},
     backButtonClicked: function(sender, mouseEvent) {
         this.doBackButton();
     },
