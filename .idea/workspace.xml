@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd931419-c9ab-41b4-b801-9c78e25d5354" name="Default" comment="refactored items/views">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/source/ConnectionView.js" afterPath="$PROJECT_DIR$/src/source/ConnectionView.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/source/ErrorDialog.js" afterPath="$PROJECT_DIR$/src/source/ErrorDialog.js" />
+    </list>
+    <ignored path="FuelAustria.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/" />
+    <ignored path=".idea/.name" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="FuelAustria" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="OptionView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/OptionView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="44" selection-start="1324" selection-end="1324" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GPSSearchView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/GPSSearchView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="35" selection-start="1219" selection-end="1236" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="appinfo.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/appinfo.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="38" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/MainView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="51" selection-start="2624" selection-end="2624" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DistrictSelectionView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/DistrictSelectionView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="59" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StationDetailView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/StationDetailView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="97" column="12" selection-start="3283" selection-end="3797" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/source/ConnectionView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="47" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ErrorDialog.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/source/ErrorDialog.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="25" selection-start="317" selection-end="317" vertical-scroll-proportion="0.33830845">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainView.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/css/MainView.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/schemas/schema.json" />
+        <option value="$PROJECT_DIR$/src/source/AddressSearchView.js" />
+        <option value="$PROJECT_DIR$/src/depends.js" />
+        <option value="$PROJECT_DIR$/src/source/AddressPriceItem.js" />
+        <option value="$PROJECT_DIR$/src/source/OpeningItem.js" />
+        <option value="$PROJECT_DIR$/src/source/StationListItem.js" />
+        <option value="$PROJECT_DIR$/src/source/ContactItem.js" />
+        <option value="$PROJECT_DIR$/src/appinfo.json" />
+        <option value="$PROJECT_DIR$/src/source/DistrictSelectionView.js" />
+        <option value="$PROJECT_DIR$/src/source/StationDetailView.js" />
+        <option value="$PROJECT_DIR$/src/css/MainView.css" />
+        <option value="$PROJECT_DIR$/src/source/MainView.js" />
+        <option value="$PROJECT_DIR$/src/source/GPSSearchView.js" />
+        <option value="$PROJECT_DIR$/src/source/OptionView.js" />
+        <option value="$PROJECT_DIR$/src/source/ConnectionView.js" />
+        <option value="$PROJECT_DIR$/src/source/ErrorDialog.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="2066" />
+    <option name="height" value="1122" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CSS</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents ProjectPane="true" />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FuelAustria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="249" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="277" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="259" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="File.Encoding" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="277" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1184" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1179" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="276" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="276" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RnD\webOS\projects\FuelAustria\src\source" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RnD\webOS\projects\FuelAustria\src" />
+      <recent name="C:\RnD\webOS\projects\FuelAustria\src\source\css" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="firefox" />
+        <option name="fileUrl" value="" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="chrome" />
+        <option name="fileUrl" value="file://$PROJECT_DIR$/src/index.html" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <configuration useDefault="false">C:\Users\Michael\AppData\Roaming\Subversion</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd931419-c9ab-41b4-b801-9c78e25d5354" name="Default" comment="" />
+      <created>1335712067880</created>
+      <updated>1335712067880</updated>
+    </task>
+    <task id="LOCAL-00001" summary="bezirkssuche started">
+      <created>1335731606536</created>
+      <updated>1335731606536</updated>
+    </task>
+    <task id="LOCAL-00002" summary="split into views">
+      <created>1335795877975</created>
+      <updated>1335795877975</updated>
+    </task>
+    <task id="LOCAL-00003" summary="listselector reenabled, fixed double selections in selector">
+      <created>1336235196572</created>
+      <updated>1336235196572</updated>
+    </task>
+    <task id="LOCAL-00004" summary="design changes, scrim + spinners">
+      <created>1336422379379</created>
+      <updated>1336422379379</updated>
+    </task>
+    <task id="LOCAL-00005" summary="design changes, scrim + spinners">
+      <created>1336499571951</created>
+      <updated>1336499571951</updated>
+    </task>
+    <task id="LOCAL-00006" summary="minor changes">
+      <created>1336505335045</created>
+      <updated>1336505335045</updated>
+    </task>
+    <task id="LOCAL-00007" summary="first steps with mocks, connectionview, errodialog">
+      <created>1336594890723</created>
+      <updated>1336594890723</updated>
+    </task>
+    <task id="LOCAL-00008" summary="views enhanced (scroller, nesting), begun detailscreen">
+      <created>1336765463779</created>
+      <updated>1336765463779</updated>
+    </task>
+    <task id="LOCAL-00009" summary="new addressview, gpsview. due to problems with service -&gt; have to wait">
+      <created>1337266053289</created>
+      <updated>1337266053289</updated>
+    </task>
+    <task id="LOCAL-00010" summary="address search">
+      <created>1337362282632</created>
+      <updated>1337362282632</updated>
+    </task>
+    <task id="LOCAL-00011" summary="application switch implemented">
+      <created>1337712431300</created>
+      <updated>1337712431300</updated>
+    </task>
+    <task id="LOCAL-00012" summary="started showing errorDialog">
+      <created>1338405432214</created>
+      <updated>1338405432215</updated>
+    </task>
+    <task id="LOCAL-00013" summary="started showing errorDialog">
+      <created>1338405465766</created>
+      <updated>1338405465766</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added webOS db">
+      <created>1338754281293</created>
+      <updated>1338754281293</updated>
+    </task>
+    <task id="LOCAL-00015" summary="refactored items/views">
+      <created>1345233768523</created>
+      <updated>1345233768523</updated>
+    </task>
+    <task id="LOCAL-00016" summary="refactored items/views">
+      <created>1347488726923</created>
+      <updated>1347488726923</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-9" y="-9" width="2066" height="1122" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3361433" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982087" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24987654" sideWeight="0.21917808" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1525926" sideWeight="0.6638567" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39409906" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored items/views" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="bezirkssuche started" />
+    <MESSAGE value="split into views" />
+    <MESSAGE value="listselector reenabled, fixed double selections in selector" />
+    <MESSAGE value="design changes, scrim + spinners" />
+    <MESSAGE value="minor changes" />
+    <MESSAGE value="first steps with mocks, connectionview, errodialog" />
+    <MESSAGE value="views enhanced (scroller, nesting), begun detailscreen" />
+    <MESSAGE value="new addressview, gpsview. due to problems with service -&gt; have to wait" />
+    <MESSAGE value="address search" />
+    <MESSAGE value="application switch implemented" />
+    <MESSAGE value="started showing errorDialog" />
+    <MESSAGE value="added webOS db" />
+    <MESSAGE value="refactored items/views" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/indexChrome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/framework_config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/depends.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="381" selection-end="381" vertical-scroll-proportion="0.33830845" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/OpeningItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="42" selection-start="83" selection-end="83" vertical-scroll-proportion="0.08457711" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/StationListItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/AddressPriceItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="22" selection-start="82" selection-end="82" vertical-scroll-proportion="0.027914613" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/OptionView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="44" selection-start="1324" selection-end="1324" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/GPSSearchView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="35" selection-start="1219" selection-end="1236" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appinfo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="38" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/MainView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="51" selection-start="2624" selection-end="2624" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/DistrictSelectionView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="59" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/StationDetailView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="12" selection-start="3283" selection-end="3797" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/ConnectionView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="47" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/MainView.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/source/ErrorDialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="25" selection-start="317" selection-end="317" vertical-scroll-proportion="0.33830845">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

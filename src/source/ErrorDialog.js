@@ -1,11 +1,13 @@
 ﻿enyo.kind({
     name: "ErrorDialog",
-    kind: "ModalDialog",
+    kind: "Popup",
+	//layoutKind: "VFlexLayout",
 	lazy: false,
-	contentHeight:"100%", width:"80%", height:"80%",
-    //width:"300px",
+	caption: '',
+	contentHeight: "100%",
+	width: "80%",
+	height: "80%",
 	published: {
-        title: "",
         message: "",
         acceptButtonCaption: "Retry"
     },
@@ -14,37 +16,41 @@
     },
 
     components: [
-		{ kind: "VFlexBox", components: [
-			{ name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
-			{ kind: "Scroller", flex: 1, components: [ { content:"here's a bunch of content<br><br><br><br>"} ]},
-			{ name: "message", className: "enyo-paragraph", allowHtml: true },
-			{ name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick" }
-		]}
+		{
+            kind: "Scroller",
+            flex: 1,
+            components: [
+                {kind: "VFlexBox", align: "center", pack: "center", components: [
+                    {kind: "HtmlContent", name: "message"},
+                    { name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick", width:"50%" }
+                ]}
+            ]
+        }
     ],
 
     create: function() {
         this.inherited(arguments);
-        this.titleChanged();
         this.messageChanged();
         this.acceptButtonCaptionChanged();
     },
 
     openAtCenter: function(inTitle, inMessage, inAcceptButtonCaption) {
-        if (inTitle) {
-            this.setTitle(inTitle);
-        }
+		if (inTitle) {
+			this.setCaption(inTitle);
+        } else {
+			this.setCaption('');
+		}
         if (inMessage) {
             this.setMessage(inMessage);
-        }
+        } else {
+			this.setMessage('');
+		}
         if (inAcceptButtonCaption) {
             this.setAcceptButtonCaption(inAcceptButtonCaption);
-        }
+        } else {
+			this.setAcceptButtonCaption('Ok');
+		}
         this.inherited(arguments);
-    },
-
-    titleChanged: function() {
-        this.$.title.setContent(this.title);
-        this.$.title.setShowing(this.title);
     },
 
     messageChanged: function() {

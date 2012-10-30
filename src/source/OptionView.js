@@ -8,9 +8,6 @@
         onAddressSearchClick: ""
     },
     components: [
-        {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
-            {kind: "SpinnerLarge"}
-        ]},
         {
             kind: "PageHeader",
             name: "header",
@@ -44,10 +41,15 @@
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-                    {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
-						{kind: "Image", src: 'images/pin.png'}
-					]},
-                    {kind: "IconButton", caption: "Adresse", icon: "images/map.png", onclick: 'onAdressSucheClick'},
+     //                {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
+					// 	{kind: "Image", src: 'images/pin.png', align: "center", pack: "center", }
+					// ]},
+                    {kind: "IconButton", name: 'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
+                        // {kind: "Scrim", layoutKind: "VFlexLayout", align: "right", components: [
+                        //     {kind: "Spinner"}
+                        // ]},
+                    ]},
+                    //{kind: "IconButton", caption: "Adresse", icon: "images/map.png", onclick: 'onAdressSucheClick'},
                     {kind: "IconButton", caption: "Bezirkssuche", icon: "images/map.png", onclick: "onBezirksSucheClick"},
 					{kind: "Group", caption: $L("Settings"), /*style: "width: 500px", */ components: [
 						{kind: "RadioGroup", name: "fuelGroup", onclick: "fuelGroupClick",
@@ -60,8 +62,8 @@
 							{kind: "CheckBox", name:"includeClosedCheck", caption: "Geschlossene anzeigen", style: "margin-right:10px"},
 							{content: "Geschlossene anzeigen"}
 						]}
-					]},
-					{kind:"Control", name:"enyoImg", className: 'enyoImg', style: 'height:100%;width:100%'}
+					]}//,
+					//{kind:"Control", name:"enyoImg", className: 'enyoImg', style: 'height:100%;width:100%'}
                 ]}
             ]
         }
@@ -123,9 +125,14 @@
 
     //-- GPS --//
     showScrim: function(inShowing) {
-        //this.$.scrim.setShowing(inShowing);
-		//this.$.spinnerLarge.setShowing(inShowing);
-		var a = this.$.gpsButton.getActive();
-		this.$.gpsButton.setActive(!a);
+        if(inShowing){
+            this.$.gpsButton.setCaption($L('Acquiring gps fix...'))
+        } else {
+            this.$.gpsButton.setCaption($L('In der Nähe'))
+        }
+  //       this.$.scrim.setShowing(inShowing);
+		// this.$.spinner.setShowing(inShowing);
+		// var a = this.$.gpsButton.getActive();
+		// this.$.gpsButton.setActive(!a);
     }
 });

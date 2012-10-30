@@ -6,10 +6,13 @@
         onRetry: "",
         onConnectionEstablished: ""
     },
+    published: {
+        message: ''
+    },
     components: [
         {kind: "Scrim", layoutKind: "VFlexLayout", align: "center", pack: "center", components: [
             {kind: "SpinnerLarge"}
-        ]}, //TODO: Enter Page Image
+        ]},
         {
             name : "getConnMgrStatus",
             kind : "PalmService",
@@ -20,9 +23,15 @@
             subscribe : false
         },
         {
-            name: "dialogError",
-            kind: "ErrorDialog",
-            onButtonClick: "retryConnectionCheck"
+            kind: "Scroller",
+            flex: 1,
+            components: [
+                {kind: "VFlexBox", align: "center", pack: "center", components: [
+                    { kind: "HtmlContent", name: "message" },
+                    //TODO: Enter Page Image
+                    { name: "acceptButton", kind: "Button", caption: 'Retry', className: "enyo-button-affirmative", onclick: "retryConnectionCheck", width:"50%" }
+                ]}
+            ]
         }
     ] ,
 
@@ -38,13 +47,14 @@
             this.doConnectionEstablished();
         } else {
             enyo.error("connection check failure, result=" + enyo.json.stringify(inResponse));
-            this.$.dialogError.openAtCenter($L("Connection Error"), "No Internet connection!", "Retry");
+            this.setMessage("No Internet connection!");
+
         }
     },
     connectionFailure : function(inSender, inResponse) {
         this.showScrim(false);
         enyo.error("connection check failure, result=" + enyo.json.stringify(inResponse));
-        this.$.dialogError.openAtCenter($L("Connection Error"), inResponse.errorText, "");
+        this.setMessage(inResponse.errorText);
     },
 
     retryConnectionCheck: function(sender, event) {
@@ -55,5 +65,9 @@
     showScrim: function(inShowing) {
         this.$.scrim.setShowing(inShowing);
         this.$.spinnerLarge.setShowing(inShowing);
-    }
+    },
+
+    messageChanged: function() {
+        this.$.message.setContent(this.message.replace(/\n/g, '<br>'));
+    },
 });
