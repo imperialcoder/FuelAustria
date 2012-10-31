@@ -43,7 +43,7 @@
                 {
                     kind: "Control",
                     name: "title",
-                    content: $L("Fuel Austria"),
+                    content: "Fuel Austria",
                     className: "enyo-text-header page-title"
                 }
             ]
@@ -69,29 +69,11 @@
         this.dataChanged();
 		this.gpsDataChanged();
     },
-    /*load: function(gpsData){
-        this.setGpsData(gpsData);
-        this.showScrim(true);
-
-        var data = {};
-        data.fuel = this.doFuelTypeSearch();
-        data.closedStations = this.doClosedCheck();
-        data.longi = gpsData.longitude;
-        data.lati = gpsData.latitude;
-
-        var url = 'http://service.imperialcoder.com/FuelAustria/GpsStations/?';
-        url += enyo.objectToQuery(data);
-
-        if(this.$.getPositionStations.getUrl() != url){
-            this.$.getPositionStations.setUrl(url);
-        }
-        this.$.getPositionStations.call();
-    },*/
     gotStations: function(sender, response, request){
         if(!response.success){
             enyo.error(JSON.stringify(response));
             this.showScrim(false);
-			this.handleError(response, $L('ErrorGpsData'));
+			this.handleError(response, $L('Error'));
         } else {
             //load data;
             this.setData(response.data);
@@ -101,7 +83,8 @@
     },
     gotStationsFailure: function(sender, response, request){
         enyo.error(enyo.json.stringify(response));
-		this.handleError(response, $L('ErrorGpsData'));
+        this.showScrim(false);
+		this.handleError(response, $L('Error'));
     },
     getItem: function(sender, index) {
         var record = this.getData()[index];
@@ -110,8 +93,7 @@
 			if(record.spritPrice[0] && record.spritPrice[0].amount){
 				amount = '€ ' + record.spritPrice[0].amount;
 			} else {
-				//amount = $L('NotCheapest');
-				amount = '-';
+				amount = $L('< Top 5');
 			}
 			this.$.listItem.setGasStationName(index + 1 + '. ' + record.gasStationName);
 			this.$.listItem.setPrice(amount);
@@ -161,7 +143,7 @@
 		var errorText = '';
 		if(response.errorCode){
 			enyo.error('in error code')
-			errorText = response.errorCode === 5 ? $L('GpsNotEnabled') : response.errorCode === 8 ? $L('GpsNotAllowed') : '';
+            errorText = response.errorCode === 5 ? $L('Gps not enabled!') : response.errorCode === 8 ? $L('No allowed to check position data, please restart and give proper permission!') : '';
 			enyo.error('errortext at end: ' + errorText)
 		}
 		if(errorText === ''){

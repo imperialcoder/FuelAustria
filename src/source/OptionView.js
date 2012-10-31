@@ -17,7 +17,7 @@
                 {
                     kind: "Control",
                     name: "title",
-                    content: $L("Fuel Austria"),
+                    content: "Fuel Austria",
                     className: "enyo-text-header page-title"
                 }]
         },
@@ -44,23 +44,23 @@
      //                {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
 					// 	{kind: "Image", src: 'images/pin.png', align: "center", pack: "center", }
 					// ]},
-                    {kind: "IconButton", name: 'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
+                    {kind: "IconButton", name: 'gpsButton', caption: $L("Surrounding"), icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
                         // {kind: "Scrim", layoutKind: "VFlexLayout", align: "right", components: [
                         //     {kind: "Spinner"}
                         // ]},
                     ]},
                     //{kind: "IconButton", caption: "Adresse", icon: "images/map.png", onclick: 'onAdressSucheClick'},
-                    {kind: "IconButton", caption: "Bezirkssuche", icon: "images/map.png", onclick: "onBezirksSucheClick"},
-					{kind: "Group", caption: $L("Settings"), /*style: "width: 500px", */ components: [
+                    {kind: "IconButton", caption: $L("District search"), icon: "images/map.png", onclick: "onBezirksSucheClick"},
+					{kind: "Group", caption: $L("Settings"), components: [
 						{kind: "RadioGroup", name: "fuelGroup", onclick: "fuelGroupClick",
 							components: [
-								{caption: "Super 95",value: "SUP"},
+								{caption: "Super 95", value: "SUP"},
 								{caption: "Diesel", value: "DIE"}
 							]
 						},
 						{kind: "HFlexBox", align: "center", tapHighlight: false, components: [
-							{kind: "CheckBox", name:"includeClosedCheck", caption: "Geschlossene anzeigen", style: "margin-right:10px"},
-							{content: "Geschlossene anzeigen"}
+							{kind: "CheckBox", name:"includeClosedCheck", style: "margin-right:10px"},
+							{content: $L('Include closed')}
 						]}
 					]}//,
 					//{kind:"Control", name:"enyoImg", className: 'enyoImg', style: 'height:100%;width:100%'}
@@ -104,14 +104,14 @@
     getPosFailure : function(inSender, inResponse) {
         enyo.error("getCurrentPosition failure, results=" + enyo.json.stringify(inResponse));
         this.showScrim(false);
-		this.handleError(inResponse, $L('ErrorGpsData'));
+		this.handleError(inResponse, $L('Error'));
     },
 	handleError: function(response, caption){
 		enyo.error(enyo.json.stringify(response));
 		var errorText = '';
 		if(response.errorCode){
 			enyo.error('in error code')
-			errorText = response.errorCode === 5 ? $L('GpsNotEnabled') : response.errorCode === 8 ? $L('GpsNotAllowed') : '';
+			errorText = response.errorCode === 5 ? $L('Gps not enabled!') : response.errorCode === 8 ? $L('No allowed to check position data, please restart and give proper permission!') : '';
 			enyo.error('errortext at end: ' + errorText)
 		}
 		if(errorText === ''){
@@ -128,7 +128,7 @@
         if(inShowing){
             this.$.gpsButton.setCaption($L('Acquiring gps fix...'))
         } else {
-            this.$.gpsButton.setCaption($L('In der Nähe'))
+            this.$.gpsButton.setCaption($L('Surrounding'))
         }
   //       this.$.scrim.setShowing(inShowing);
 		// this.$.spinner.setShowing(inShowing);

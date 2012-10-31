@@ -1,68 +1,69 @@
 ﻿enyo.kind({
     name: "ErrorDialog",
     kind: "Popup",
-	//layoutKind: "VFlexLayout",
-	lazy: false,
-	caption: '',
-	contentHeight: "100%",
-	width: "80%",
-	height: "80%",
-	published: {
+    lazy: false,
+    scrim: true,
+    contentHeight: "100%",
+    width: "80%",
+    height: "80%",
+    published: {
+        title: "",
         message: "",
-        acceptButtonCaption: "Retry"
+        acceptButtonCaption: "OK"
     },
-    events: {
-        onButtonClick: ""
-    },
-
+    
     components: [
-		{
-            kind: "Scroller",
-            flex: 1,
-            components: [
-                {kind: "VFlexBox", align: "center", pack: "center", components: [
-                    {kind: "HtmlContent", name: "message"},
-                    { name: "acceptButton", kind: "Button", className: "enyo-button-affirmative", onclick: "acceptClick", width:"50%" }
-                ]}
-            ]
-        }
+        {kind: "Scroller", style: "height: 90%;", components: [
+            {kind: "VFlexBox", components: [
+                { name: "title", width:"100%", style:"text-align: center; padding-bottom: 6px;" },
+                { name: "message",  className: "enyo-paragraph", allowHtml: true }  
+            ]}
+        ]},
+        {kind: "VFlexBox", align: "center", pack: "center", components: [
+            { name: "acceptButton", kind: "Button", onclick: "acceptClick", width:"50%" }
+        ]}
     ],
 
     create: function() {
         this.inherited(arguments);
+        this.titleChanged();
         this.messageChanged();
         this.acceptButtonCaptionChanged();
     },
 
     openAtCenter: function(inTitle, inMessage, inAcceptButtonCaption) {
-		if (inTitle) {
-			this.setCaption(inTitle);
+        if (inTitle) {
+            this.setTitle(inTitle);
         } else {
-			this.setCaption('');
-		}
+            this.setTitle();
+        }
         if (inMessage) {
             this.setMessage(inMessage);
         } else {
-			this.setMessage('');
-		}
+            this.setMessage($L("No description available"));
+        }
         if (inAcceptButtonCaption) {
             this.setAcceptButtonCaption(inAcceptButtonCaption);
         } else {
-			this.setAcceptButtonCaption('Ok');
-		}
+            this.setAcceptButtonCaption('OK');
+        }
         this.inherited(arguments);
     },
 
+    titleChanged: function() {
+        this.$.title.setContent(this.title);
+        this.$.title.setShowing(this.title);
+    },
+
     messageChanged: function() {
-        this.$.message.setContent(this.message.replace(/\n/g, '<br>'));
+        this.$.message.setContent(this.getMessage());//.replace(/\n/g, '<br>'));
     },
 
     acceptButtonCaptionChanged: function() {
-        this.$.acceptButton.setCaption(this.acceptButtonCaption);
+        this.$.acceptButton.setCaption(this.getAcceptButtonCaption());
     },
 
     acceptClick: function() {
-        this.doButtonClick();
         this.close();
     }
 });

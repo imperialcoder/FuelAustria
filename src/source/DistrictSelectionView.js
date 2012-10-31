@@ -58,20 +58,21 @@
                 }
             ]
         },
-        {kind: "ListSelector", label:'Bundesland', name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
+        {kind: "ListSelector", label:$L('Federal state'), name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
             {kind: enyo.Spinner, name: "stateSpinner"}]},
-        {kind: "ListSelector", label:'Bezirk', name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
+        {kind: "ListSelector", label:$L('District'), name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
             {kind: enyo.Spinner, name: "districtSpinner"}]},
-        {kind: "ActivityButton", caption: "Suche starten", name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
+        {kind: "ActivityButton", caption: $L("Start search"), name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
 		{kind: "Scroller", flex:1, components: [
 			{kind: "VFlexBox", className: "box-center", components: [
 				{kind: "RowGroup", caption: $L("Stations"), components: [
 					{kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-						{kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", className: 'generalFont', onclick: "stationSelected",  components: [
-							{name: "gasStationName", flex: 4},
-							{name: "price", flex: 2},
-							{kind: "Image", flex: 1, name:"open", width:18, height:18}
-						]}
+						// {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", className: 'generalFont', onclick: "stationSelected",  components: [
+						// 	{name: "gasStationName", flex: 4},
+						// 	{name: "price", flex: 2},
+						// 	{kind: "Image", flex: 1, name:"open", width:18, height:18}
+						// ]}
+                        {kind: "StationListItem", name:'listItem', tapHighlight: true, onclick: "stationSelected"}
 					]}
 				]}
 			]}
@@ -89,7 +90,7 @@
 	},
     gotData: function(sender, response, request) {
         if(!response.success){
-			this.handleError(response, $L('ErrorDistrictData'));
+			this.handleError(response, $L('Error'));
         } else {
             this.setData(response.data);
         }
@@ -100,13 +101,13 @@
     gotDataFailure: function(sender, response, request) {
         enyo.error(enyo.json.stringify(response));
         this.showScrim(false);
-		this.handleError(response, $L('ErrorDistrictData'));
+		this.handleError(response, $L('Error'));
     },
     gotBezirke: function(sender, response, request){
         if(!response.success){
             enyo.error(JSON.stringify(response));
             this.$.stateSpinner.hide();
-			this.handleError(response, $L('ErrorBaseData'));
+			this.handleError(response, $L('Error'));
             return;
         } else {
             var items = [];
@@ -126,7 +127,7 @@
         enyo.error('bezirke error');
         enyo.error(enyo.json.stringify(response));
         this.$.stateSpinner.hide();
-		this.handleError(response, $L('ErrorBaseData'));
+		this.handleError(response, $L('Error'));
     },
     federalStateChanged: function(sender, value, oldValue) {
         if(value !== oldValue){
@@ -137,7 +138,7 @@
                     return false;
                 }
             }, this);
-            var items = [{caption: 'Alle', value:0}];
+            var items = [{caption: $L('All'), value:0}];
             enyo.forEach(record.unterregionen, function(district){
                 items.push({ caption: district.bezeichnung, value: district.code});
             }, this);
@@ -183,15 +184,15 @@
     getItem: function(sender, index) {
         var record = this.getData()[index];
         if (record) {
-            this.$.gasStationName.setContent(index + 1 + '. ' + record.gasStationName);
-			var amount = '';
-			if(record.spritPrice[0].amount){
-				amount = '€ ' + record.spritPrice[0].amount;
-			} else {
-				amount = $L('NotCheapest');
-			}
-            this.$.price.setContent(amount);
-            this.$.open.setSrc(this.translateBoolean(record.open));
+            var amount = '';
+            if(record.spritPrice[0] && record.spritPrice[0].amount){
+                amount = '€ ' + record.spritPrice[0].amount;
+            } else {
+                amount = $L('< Top 5');
+            }
+            this.$.listItem.setGasStationName(index + 1 + '. ' + record.gasStationName);
+            this.$.listItem.setPrice(amount);
+            this.$.listItem.setOpen(record.open);
             return true;
         }
     },

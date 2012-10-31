@@ -1,4 +1,24 @@
 {
-	"Fuel Austria": "Spritpreisrechner",
-	"Acquiring gps fix...": "Suche GPS fix..."
+	"Error": "Fehler",
+	"All": "Alle",
+	"Settings": "Optionen",
+	"Gps not enabled!": "GPS nicht aktiviert!",
+	"No allowed to check position data, please restart and give proper permission!": "Bitte App neu starten und Berechtigung zum Verwenden von Standortbasierten Daten vergeben!",
+	"Acquiring gps fix...": "Suche GPS fix...",
+
+	"Stations": "Tankstellen",
+	"Surrounding": "In der Nähe",
+	"District search": "Bezirkssuche",
+	"Include closed": "Geschlossene anzeigen",
+	"Start search": "Suche starten",
+	"Federal state": "Bundesland",
+	"District": "Bezirk",
+
+	"Address": "Adresse",
+	"Opening hours": "Öffnungszeiten",
+	"Contact": "Kontakt",
+	"Offer": "Angebot",
+	"Payment": "Zahlungsmöglichkeiten",
+	"Misc": "Diverses",
+	"Map": "Karte"
 }

@@ -29,7 +29,7 @@
                 {
                     kind: "Control",
                     name: "title",
-                    content: $L("Fuel Austria"),
+                    content: "Fuel Austria",
                     className: "enyo-text-header page-title"
                 }
             ]
@@ -44,7 +44,7 @@
                     {kind: "DividerDrawer", name: "addressDrawer", caption: $L("Address"), open:true, components: [
 						{ kind:"AddressPriceItem", name:"addressPrice" }
                     ]},
-                    {kind: "DividerDrawer", name:"opneningHoursContainer", caption: $L("OpeningHours"), open:false, components: []},
+                    {kind: "DividerDrawer", name:"opneningHoursContainer", caption: $L("Opening hours"), open:false, components: []},
                     {kind: "DividerDrawer", caption: $L("Contact"), open:false, components: [
                         {kind:"ContactItem", name:"contact"}
                     ]},
@@ -89,7 +89,7 @@
 				deviceInfo.screenWidth = 320;
 			}
 			var orientation = enyo.getWindowOrientation();
-			enyo.error(orientation);
+			//enyo.error(orientation);
 			if(orientation && (orientation === 'right' || orientation === 'left')){
 				var width = deviceInfo.screenWidth;
 				deviceInfo.screenWidth = deviceInfo.screenHeight;
