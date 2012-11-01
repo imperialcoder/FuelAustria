@@ -5,8 +5,18 @@
     components: [
         {kind: "ApplicationEvents", onBack: "backGesture", onLoad: "loadValues", onUnload: "saveValues"},
 		{kind: "AppMenu", components: [
-			{caption: "About", onclick: "openAbout"}
+			{caption: $L("About"), onclick: "openAbout"}
 		]} ,
+        {kind: "Popup", allowHtml:true, /*components: [
+                { kind: "Scroller", flex: 1 }
+            ],*/
+            content: 
+            "<b>"+enyo.fetchAppInfo().title+" v"+enyo.fetchAppInfo().version+ "</b><br>"+
+            "<br>&copy "+enyo.fetchAppInfo().vendor+"<br><a href='" + enyo.fetchAppInfo().vendorurl + "'>" + enyo.fetchAppInfo().vendorurl + "</a>"+
+            "<br><br>" + $L('Applicaton to show cheapest gas stations in Austria.') + "<br><br>"+
+            $L('Data provided by e-Control Austria') + " <a href='http:\/\/www.spritpreisrechner.at'>spritpreisrechner.at</a>",
+            onClose:"boxClicked"
+        },
         { kind: "Pane", flex: 1, onSelectView: "viewSelected", components: [
             {
                 name: "connectionPane",
@@ -107,6 +117,14 @@
         if(this.$.pane.getViewIndex()> 1) {
             this.$.pane.back();
         }
+    },
+    openAbout: function() {
+        enyo.scrim.show();
+        this.$.popup.openAtCenter();
+    },
+    boxClicked: function(){
+        enyo.scrim.hide();
+        //this.$.popup.close();
     },
 
     viewSelected: function(inSender, inView, inPreviousView) {

@@ -29,7 +29,7 @@
             ]}
         ]},
         {kind: "VFlexBox", align: "center", pack: "center", components: [
-            { name: "acceptButton", kind: "Button", caption: 'Retry', onclick: "retryConnectionCheck", width:"50%", showing: false }
+            { name: "acceptButton", kind: "Button", caption: $L('Retry'), onclick: "retryConnectionCheck", width:"50%", showing: false }
         ]}
     ] ,
 

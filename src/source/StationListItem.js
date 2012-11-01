@@ -4,14 +4,18 @@
     published: {
 		open: false,
 		gasStationName: '',
-		price: ''
+		price: '',
+		distance: ''
     },
 
     components: [
 		{layoutKind: "HFlexLayout", className: 'generalFont', components:[
 			{kind: "Image", name:"openImage", className: 'imageSep'},
 			{name: "gasStationName", flex: 1},
-			{name: "price", className: 'rightAlign'}
+			{layoutKind: "VFlexLayout", className: 'generalFont', components:[
+				{name: "price", className: 'rightAlign'},
+				{name: "distance", className: 'distance'},
+			]}
 		]}
     ],
 
@@ -25,10 +29,13 @@
 		this.$.openImage.setSrc(this.translateBoolean(this.open));
 	},
 	gasStationNameChanged: function(){
-		this.$.gasStationName.setContent(this.gasStationName);
+		this.$.gasStationName.setContent(this.getGasStationName());
 	},
 	priceChanged: function(){
-		this.$.price.setContent(this.price);
+		this.$.price.setContent(this.getPrice());
+	},
+	distanceChanged: function(){
+		this.$.distance.setContent(this.getDistance());
 	},
 	translateBoolean: function(open){
 		if(open){

@@ -66,7 +66,7 @@
     ],
     create: function() {
         this.inherited(arguments);
-        this.dataChanged();
+        //this.dataChanged();
 		this.gpsDataChanged();
     },
     gotStations: function(sender, response, request){
@@ -93,11 +93,12 @@
 			if(record.spritPrice[0] && record.spritPrice[0].amount){
 				amount = '€ ' + record.spritPrice[0].amount;
 			} else {
-				amount = $L('< Top 5');
+				amount = $L('not in top 5');
 			}
 			this.$.listItem.setGasStationName(index + 1 + '. ' + record.gasStationName);
 			this.$.listItem.setPrice(amount);
             this.$.listItem.setOpen(record.open);
+            this.$.listItem.setDistance('km ' + record.distance);
             return true;
         }
     },
@@ -105,10 +106,7 @@
         var station = this.getData()[index];
         this.doStationSelected(station);
     },
-    //
-    dataChanged: function(){
-		enyo.log('data changed');
-    },
+    
 	gpsDataChanged: function(){
 		if(this.gpsData.config){
 			this.showScrim(true);

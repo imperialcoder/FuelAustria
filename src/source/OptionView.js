@@ -58,9 +58,9 @@
 								{caption: "Diesel", value: "DIE"}
 							]
 						},
-						{kind: "HFlexBox", align: "center", tapHighlight: false, components: [
-							{kind: "CheckBox", name:"includeClosedCheck", style: "margin-right:10px"},
-							{content: $L('Include closed')}
+						{kind: "HFlexBox", style: "margin-right:10px;margin-left:10px;margin-bottom:10px", tapHighlight: false, components: [
+							{kind: "CheckBox", name:"includeClosedCheck",},
+							{content: $L('Include closed'), className: 'generalFont', style: 'padding-top:5px; padding-left:10px;' }
 						]}
 					]}//,
 					//{kind:"Control", name:"enyoImg", className: 'enyoImg', style: 'height:100%;width:100%'}

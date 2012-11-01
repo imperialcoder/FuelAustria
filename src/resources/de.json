@@ -1,10 +1,12 @@
 {
+	"About": "Über",
 	"Error": "Fehler",
+	"Retry": "Wiederholen",
 	"All": "Alle",
 	"Settings": "Optionen",
 	"Gps not enabled!": "GPS nicht aktiviert!",
 	"No allowed to check position data, please restart and give proper permission!": "Bitte App neu starten und Berechtigung zum Verwenden von Standortbasierten Daten vergeben!",
-	"Acquiring gps fix...": "Suche GPS fix...",
+	"Acquiring gps fix...": "Warte auf GPS...",
 
 	"Stations": "Tankstellen",
 	"Surrounding": "In der Nähe",
@@ -20,5 +22,10 @@
 	"Offer": "Angebot",
 	"Payment": "Zahlungsmöglichkeiten",
 	"Misc": "Diverses",
-	"Map": "Karte"
+	"Map": "Karte",
+
+	"not in top 5": "nicht in Top 5",
+
+	"Applicaton to show cheapest gas stations in Austria.": "Österreichs billigste Tankstellen auf Blick.",
+	"Data provided by e-Control Austria": "Datenquelle: e-Control Austria"
 }

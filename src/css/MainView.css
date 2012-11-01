@@ -2,6 +2,12 @@
 text-align: right;
 }
 
+.distance {
+    text-align: right;
+    font-size:8pt;
+    padding-top:8px;
+}
+
 .generalFont {
     font-size:12pt;
 }
@@ -39,3 +45,19 @@ text-align: right;
     background-position: center;
 }
 
+.enyo-group.labeled
+{
+    -webkit-border-image: url(../images/group-labeled.png) 36 14 14 14 repeat repeat;
+}
+
+.enyo-radiobutton.enyo-first {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.enyo-radiobutton.enyo-last {
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}

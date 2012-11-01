@@ -188,7 +188,7 @@
             if(record.spritPrice[0] && record.spritPrice[0].amount){
                 amount = '€ ' + record.spritPrice[0].amount;
             } else {
-                amount = $L('< Top 5');
+                amount = $L('not in top 5');
             }
             this.$.listItem.setGasStationName(index + 1 + '. ' + record.gasStationName);
             this.$.listItem.setPrice(amount);
