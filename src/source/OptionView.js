@@ -41,8 +41,8 @@
                 kind: "VFlexBox",
                 className: "box-center",
                 components: [
-     //                {kind: "ActivityButton", name:'gpsButton', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
-					// 	{kind: "Image", src: 'images/pin.png', align: "center", pack: "center", }
+     //                {kind: "ActivityButton", name:'gpsButton2', caption: "In der Nähe", icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
+					// 	{kind: "Image", src: 'images/pin.png', style: 'display: inline-block;' }
 					// ]},
                     {kind: "IconButton", name: 'gpsButton', caption: $L("Surrounding"), icon: "images/pin.png", onclick: "onPositionBtnClick", components:[
                         // {kind: "Scrim", layoutKind: "VFlexLayout", align: "right", components: [

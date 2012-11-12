@@ -18,17 +18,16 @@
             onClose:"boxClicked"
         },
         { kind: "Pane", flex: 1, onSelectView: "viewSelected", components: [
-            {
-                name: "connectionPane",
-                kind: "ConnectionView",
-                flex: 1,
-                onConnectionEstablished: "connectionEstablished"
-            },
+            // {
+            //     name: "connectionPane",
+            //     kind: "ConnectionView",
+            //     flex: 1,
+            //     onConnectionEstablished: "connectionEstablished"
+            // },
             {
                 name: "optionPane",
                 kind: "OptionView",
                 flex: 1,
-                //lazy: true,
                 onDistrictSearchClick: "districtSearchClick",
                 onCurrentPositionClick: "currentPositionClick",
                 onAddressSearchClick: 'addressSearchClick'
@@ -40,7 +39,7 @@
                 lazy: true,
                 onStationSelected: 'stationSelected',
                 onFuelTypeSearch: 'getFuelType',
-                onClosedCheck: 'closedCheck',
+                onClosedCheck: 'getClosedStations',
                 onBackButton: 'backButtonHandler'
             },
             {
@@ -50,7 +49,7 @@
                 lazy: true,
                 onStationSelected: 'stationSelected',
                 onFuelTypeSearch: 'getFuelType',
-                onClosedCheck: 'closedCheck',
+                onClosedCheck: 'getClosedStations',
                 onBackButton: 'backButtonHandler'
             },
             {
@@ -60,7 +59,7 @@
                 lazy: true,
                 onStationSelected: 'stationSelected',
                 onFuelTypeSearch: 'getFuelType',
-                onClosedCheck: 'closedCheck',
+                onClosedCheck: 'getClosedStations',
                 onBackButton: 'backButtonHandler'
             },
             {
@@ -108,7 +107,7 @@
     backGesture: function(inSender, inEvent) {
         inEvent.stopPropagation();
         inEvent.preventDefault();
-        if(this.$.pane.getViewIndex()> 1) {
+        if(this.$.pane.getViewIndex()> 0) {
             this.$.pane.back();
         }
         return -1;
@@ -124,7 +123,6 @@
     },
     boxClicked: function(){
         enyo.scrim.hide();
-        //this.$.popup.close();
     },
 
     viewSelected: function(inSender, inView, inPreviousView) {

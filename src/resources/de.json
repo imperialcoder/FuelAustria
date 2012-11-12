@@ -24,8 +24,19 @@
 	"Misc": "Diverses",
 	"Map": "Karte",
 
+	"Self service": "Selbstbedienung",
+	"Automat": "Automat",
+	"Service": "Service",
+
+	"Cash": "Bar",
+	"Credit card":"Kreditkarte",
+	"Maestro": "Bankomatkarte",
+	"Companionship": "Genossenschaft",
+
 	"not in top 5": "nicht in Top 5",
 
-	"Applicaton to show cheapest gas stations in Austria.": "Österreichs billigste Tankstellen auf Blick.",
-	"Data provided by e-Control Austria": "Datenquelle: e-Control Austria"
+	"Applicaton to show cheapest gas stations in Austria.": "Österreichs billigste Tankstellen auf einen Blick.",
+	"Data provided by e-Control Austria": "Datenquelle: e-Control Austria",
+	"An error occured while loading districts. Check your internet connection!": "Beim Laden der Bezirksdaten ist ein Fehler aufgetreten. Möglicherweise besteht keine Internetverbindung!",
+	"This station provided no data.": "Hierzu liegen von dieser Tankstelle keine Informationen vor."
 }

@@ -11,5 +11,8 @@
     "source/AddressSearchView.js",
 	"source/AddressPriceItem.js",
 	"source/ContactItem.js",
+    "source/OfferItem.js",
+    "source/MiscItem.js",
+    "source/PaymentItem.js",
 	"css/MainView.css"
 );

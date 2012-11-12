@@ -58,20 +58,15 @@
                 }
             ]
         },
-        {kind: "ListSelector", label:$L('Federal state'), name:'federalStateSelector', popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
+        {kind: "ListSelector", label:$L('Federal state'), name:'federalStateSelector', disabled: true, popupAlign:'left', contentPack:'middle', onChange: "federalStateChanged", items: [], components: [
             {kind: enyo.Spinner, name: "stateSpinner"}]},
-        {kind: "ListSelector", label:$L('District'), name:'districtSelector', popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
+        {kind: "ListSelector", label:$L('District'), name:'districtSelector', disabled: true, popupAlign:'left', contentPack:'middle', onChange: "districtChanged", items: [], components: [
             {kind: enyo.Spinner, name: "districtSpinner"}]},
-        {kind: "ActivityButton", caption: $L("Start search"), name: 'searchButton',  onclick: "onBezirksAuswahlSucheClick"},
+        {kind: "ActivityButton", caption: $L("Start search"), name: 'searchButton', disabled: true, onclick: "onBezirksAuswahlSucheClick"},
 		{kind: "Scroller", flex:1, components: [
 			{kind: "VFlexBox", className: "box-center", components: [
 				{kind: "RowGroup", caption: $L("Stations"), components: [
 					{kind: "VirtualRepeater", onSetupRow: 'getItem', name: 'priceList', components: [
-						// {kind: "Item", name:'listItem', tapHighlight: true, layoutKind: "HFlexLayout", className: 'generalFont', onclick: "stationSelected",  components: [
-						// 	{name: "gasStationName", flex: 4},
-						// 	{name: "price", flex: 2},
-						// 	{kind: "Image", flex: 1, name:"open", width:18, height:18}
-						// ]}
                         {kind: "StationListItem", name:'listItem', tapHighlight: true, onclick: "stationSelected"}
 					]}
 				]}
@@ -105,10 +100,7 @@
     },
     gotBezirke: function(sender, response, request){
         if(!response.success){
-            enyo.error(JSON.stringify(response));
-            this.$.stateSpinner.hide();
-			this.handleError(response, $L('Error'));
-            return;
+            this.gotBezirkeFailure(sender, response, request);
         } else {
             var items = [];
             enyo.forEach(response.states, function(state){
@@ -119,6 +111,9 @@
             this.$.federalStateSelector.itemsChanged();
             this.$.stateSpinner.hide();
             this.$.districtSpinner.show();
+            this.$.federalStateSelector.setDisabled(false);
+            this.$.districtSelector.setDisabled(false);
+            this.$.searchButton.setDisabled(false);
             this.federalStateChanged(sender, this.$.federalStateSelector.getValue());
 			this.setInitialized(true);
         }
@@ -127,7 +122,7 @@
         enyo.error('bezirke error');
         enyo.error(enyo.json.stringify(response));
         this.$.stateSpinner.hide();
-		this.handleError(response, $L('Error'));
+		this.handleError($L('An error occured while loading districts. Check your internet connection!') + '<br/>' + response, $L('Error'));
     },
     federalStateChanged: function(sender, value, oldValue) {
         if(value !== oldValue){
@@ -163,7 +158,7 @@
         data.district = this.$.districtSelector.getValue();
         data.fuel = this.doFuelTypeSearch();
 
-        data.closedStations = this.doClosedCheck();
+        data.closedStations = this.doClosedCheck() ? 'checked' : false;
 
         if(!data.district) {
             var url = 'http://service.imperialcoder.com/FuelAustria/AllStations/?';

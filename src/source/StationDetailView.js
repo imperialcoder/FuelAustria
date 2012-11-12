@@ -49,13 +49,13 @@
                         {kind:"ContactItem", name:"contact"}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Offer"), open:false, components: [
-                        {kind:"Control", name:"OfferContent", content: ""}
+                        {kind:"OfferItem", name:"offer"}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Payment"), open:false, components: [
-                        {kind:"Control", name:"paymentContent", content: ""}
+                        {kind:"PaymentItem", name:"payment"}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Misc"), open:false, components: [
-                        {kind:"Control", name:"miscContent", content: ""}
+                        {kind:"MiscItem", name:"misc"}
                     ]},
                     {kind: "DividerDrawer", caption: $L("Map"), open:false, components: [
                         {kind:"Image", name:"mapImage"}
@@ -69,7 +69,7 @@
 
         //address
         this.$.addressDrawer.setCaption(station.gasStationName || '-');
-		this.$.addressPrice.setData(station.address, station.city, station.spritPrice[0].amount);
+		this.$.addressPrice.setData(station.address, station.postalCode + ' ' + station.city, station.spritPrice[0].amount);
         //openinghours
 		enyo.forEach(this.$.opneningHoursContainer.getControls(), function(control){
 			control.destroy();
@@ -80,7 +80,12 @@
         this.$.opneningHoursContainer.render();
         //contact
 		this.$.contact.setData(station.mail, station.telephone, station.fax, station.url);
-
+        //offer
+        this.$.offer.setData(station.self, station.automat, station.service);
+        //payment
+        this.$.payment.setData(station.bar, station.kredit, station.club, station.clubCard, station.maestro, station.companionship, station.payMethod, station.access);
+        //misc
+        this.$.misc.setServiceText(station.serviceText);
 		//map
 		var deviceInfo = enyo.fetchDeviceInfo();
 		deviceInfo = deviceInfo || { screenHeight: 640, screenWidth: 640 };
